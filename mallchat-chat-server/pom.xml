@@ -15,9 +15,14 @@
             <groupId>com.naidelii.mallchat</groupId>
             <artifactId>mallchat-common-data</artifactId>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.naidelii.mallchat</groupId>-->
+<!--            <artifactId>mallchat-biz-websocket</artifactId>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.naidelii.mallchat</groupId>
-            <artifactId>mallchat-biz-websocket</artifactId>
+            <artifactId>mallchat-biz-ws</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

@@ -3,15 +3,18 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.naidelii.mallchat</groupId>
-        <artifactId>MyMallChat</artifactId>
+        <artifactId>mallchat-biz</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>mallchat-biz</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>mallchat-biz-websocket</module>
-        <module>mallchat-biz-ws</module>
-    </modules>
+    <artifactId>mallchat-biz-ws</artifactId>
+
+    <dependencies>
+        <!--webSocket-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
