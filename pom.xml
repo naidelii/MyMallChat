@@ -14,6 +14,7 @@
     <modules>
         <module>mallchat-chat-server</module>
         <module>mallchat-common</module>
+        <module>mallchat-biz</module>
     </modules>
 
     <!-- 依赖管理：继承SpringBoot，后续子模块都是基于SpringBoot进行开发
@@ -86,6 +87,11 @@
             <dependency>
                 <groupId>com.naidelii.mallchat</groupId>
                 <artifactId>mallchat-common-data</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.naidelii.mallchat</groupId>
+                <artifactId>mallchat-biz-websocket</artifactId>
                 <version>${version}</version>
             </dependency>
         </dependencies>
