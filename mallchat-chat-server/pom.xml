@@ -10,5 +10,11 @@
     </parent>
 
     <artifactId>mallchat-chat-server</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>com.naidelii.mallchat</groupId>
+            <artifactId>mallchat-common-data</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

@@ -1,7 +1,8 @@
 spring:
-  profiles:
-    #运行的环境
-    active: test
+  config:
+    activate:
+      #运行的环境
+      on-profile: test
   application:
     name: mallchat
   # 数据源配置

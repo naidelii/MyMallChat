@@ -29,11 +29,11 @@
     <!-- 统一管理版本号-->
     <properties>
         <boot.version>2.6.7</boot.version>
-        <cloud.version>Hoxton.SR10</cloud.version>
-        <mysql.version>5.1.47</mysql.version>
-        <mybatis-plus.version>3.1.2</mybatis-plus.version>
+        <mysql.version>8.0.29</mysql.version>
+        <mybatis-plus.version>3.4.0</mybatis-plus.version>
         <druid.version>1.1.17</druid.version>
-        <lombok.version>1.18.6</lombok.version>
+        <lombok.version>1.18.10</lombok.version>
+        <netty-all.version>4.1.76.Final</netty-all.version>
     </properties>
 
     <!-- 对子项目的依赖版本进行管理，不会实际引入jar -->
@@ -65,11 +65,28 @@
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
+            <!-- test-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-test</artifactId>
                 <version>${boot.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <!-- netty -->
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${netty-all.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.naidelii.mallchat</groupId>
+                <artifactId>mallchat-common-base</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.naidelii.mallchat</groupId>
+                <artifactId>mallchat-common-data</artifactId>
+                <version>${version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -12,6 +12,7 @@
 
     <modules>
         <module>mallchat-common-base</module>
+        <module>mallchat-common-data</module>
     </modules>
 
 </project>
