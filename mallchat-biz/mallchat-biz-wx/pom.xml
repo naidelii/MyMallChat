@@ -8,6 +8,7 @@
     </parent>
 
     <artifactId>mallchat-biz-wx</artifactId>
+
     <dependencies>
         <dependency>
             <groupId>com.github.binarywang</groupId>

@@ -111,6 +111,11 @@
                 <artifactId>mallchat-biz-chat</artifactId>
                 <version>${version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.naidelii.mallchat</groupId>
+                <artifactId>mallchat-biz-wx</artifactId>
+                <version>${version}</version>
+            </dependency>
             <!-- 使用Swagger2-->
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>

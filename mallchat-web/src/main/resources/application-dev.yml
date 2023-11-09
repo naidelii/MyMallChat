@@ -13,9 +13,12 @@ mallchat:
 # 微信公众号配置
 wx:
   mp:
-    callback:
+    # 内网穿透域名
+    callback: http://nat.naidelii.top
     configs:
       - appId: wxeb111b0b780f28f9
         secret: daeba080db010d6c912a467cda175704
-        token:
+        # 接口配置的token值
+        token: naidelii
+        # 接口配置里的EncodingAESKey值，测试号不用（线上的服务需要配置）
         aesKey:
