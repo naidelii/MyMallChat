@@ -24,7 +24,7 @@ public class CustomWebSocketInterceptor implements HandshakeInterceptor {
      */
     @Override
     public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) {
-
+        // 可以做一些登录校验之类的
         return true;
     }
 

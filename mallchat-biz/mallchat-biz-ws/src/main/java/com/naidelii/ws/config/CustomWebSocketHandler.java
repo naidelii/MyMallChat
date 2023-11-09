@@ -38,24 +38,18 @@ public class CustomWebSocketHandler extends TextWebSocketHandler {
      */
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {
-        String userId = session.getAttributes().get("userId").toString();
-        WEB_SOCKET_SESSION_MAPS.put(USER_ID + userId, session);
-        String message = session.getId() + "【" + userId + "】已连接";
-        log.info(message);
-        sendMessage(session, message);
+        log.info("连接开启");
     }
 
     /**
      * 连接关闭
      *
      * @param session 会话
-     * @param status 状态
+     * @param status  状态
      */
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
-        String userId = session.getAttributes().get("userId").toString();
-        WEB_SOCKET_SESSION_MAPS.remove(USER_ID + userId);
-        log.info(session.getId() + "【" + userId + "】连接关闭");
+        log.info("连接关闭");
     }
 
     /**
@@ -108,7 +102,7 @@ public class CustomWebSocketHandler extends TextWebSocketHandler {
                 log.info("【websocket消息】 单点消息:" + message);
                 sendMessage(session, message);
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error("sendMessage error", e);
                 Thread.currentThread().interrupt();
             }
         }

@@ -27,7 +27,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
                 .addHandler(new CustomWebSocketHandler(), "/ws")
                 // 允许跨域
                 .setAllowedOrigins("*")
-                // 设置WebSocket 拦截器
+                // 设置WebSocket拦截器（可以做一些登录校验）
                 .addInterceptors(new CustomWebSocketInterceptor());
     }
 
