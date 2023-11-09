@@ -32,7 +32,6 @@ public class NettyWebSocketServer {
      * ws server 端口
      */
     private static final int WEB_SOCKET_PORT = 8090;
-    private static final NettyWebSocketServerHandler NETTY_WEB_SOCKET_SERVER_HANDLER = new NettyWebSocketServerHandler();
     /**
      * 配置服务端的NIO线程组
      * NioEventLoopGroup 是用来处理I/O操作的Reactor线程组
@@ -75,26 +74,32 @@ public class NettyWebSocketServer {
         ServerBootstrap serverBootstrap = new ServerBootstrap();
         // 配置服务端的NIO线程组
         serverBootstrap
-                // 设置group，将bossGroup， workerGroup线程组传递到ServerBootstrap
+                // 设置group，将bossGroup，workerGroup线程组传递到ServerBootstrap
                 .group(bossGroup, workerGroup)
                 // ServerSocketChannel是以NIO的selector为基础进行实现的，用来接收新的连接，这里告诉Channel通过NioServerSocketChannel获取新的连接
                 .channel(NioServerSocketChannel.class)
                 .option(ChannelOption.SO_BACKLOG, 128)
                 .option(ChannelOption.SO_KEEPALIVE, true)
-                // 为 bossGroup 添加 日志处理器
+                // 为bossGroup添加日志处理器，用于打印服务器启动日志
                 .handler(new LoggingHandler(LogLevel.INFO))
                 .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel channel) {
                         ChannelPipeline pipeline = channel.pipeline();
-                        // 因为使用http协议，所以需要使用http的编码器，解码器
+                        // 因为使用http协议，所以需要使用http的编码器，解码器，将socket数据流转换为HttpRequest
+                        // WebSocket协议握手时需要使用HttpServerCodec，握手结束后只需要使用WebSocket协议（协议升级）
                         pipeline.addLast(new HttpServerCodec());
+                        // http数据在传输过程中是分段的，HttpObjectAggregator可以把多个段聚合起来（
+                        // 这就是为什么当浏览器发送大量数据时，就会发出多次http请求的原因）
+                        // HttpServerCodec与HttpObjectAggregator会在第一次http请求后被移除掉（后面都是升级后的WS请求）
+                        pipeline.addLast(new HttpObjectAggregator(8192));
                         // 以块方式写，添加 chunkedWriter 处理器
                         pipeline.addLast(new ChunkedWriteHandler());
-                        pipeline.addLast(new HttpObjectAggregator(8192));
-                        pipeline.addLast(new WebSocketServerProtocolHandler("/"));
-                        // 自定义handler ，处理业务逻辑
-                        pipeline.addLast(NETTY_WEB_SOCKET_SERVER_HANDLER);
+                        // WebSocket握手处理器，处理WebSocket协议的握手（第一次HTTP请求），ping-pong处理，close处理，
+                        // 对于二进制或者文件数据，直接交付给下层处理
+                        pipeline.addLast(new WebSocketServerProtocolHandler("/ws"));
+                        // 自定义handler，处理自定义的业务逻辑
+                        pipeline.addLast(new NettyWebSocketServerHandler());
                     }
                 });
         // 启动服务器，监听端口，阻塞直到启动成功

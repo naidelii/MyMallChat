@@ -3,17 +3,16 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.naidelii.mallchat</groupId>
-        <artifactId>MyMallChat</artifactId>
+        <artifactId>mallchat-common</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <packaging>pom</packaging>
-    <artifactId>mallchat-common</artifactId>
+    <artifactId>mallchat-common-swagger</artifactId>
 
-    <modules>
-        <module>mallchat-common-base</module>
-        <module>mallchat-common-data</module>
-        <module>mallchat-common-swagger</module>
-    </modules>
-
+    <dependencies>
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+        </dependency>
+    </dependencies>
 </project>

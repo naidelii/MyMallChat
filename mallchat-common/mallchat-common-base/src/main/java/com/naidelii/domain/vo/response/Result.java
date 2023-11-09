@@ -1,4 +1,4 @@
-package com.naidelii.api;
+package com.naidelii.domain.vo.response;
 
 import com.naidelii.constant.enums.ResultEnum;
 import lombok.Getter;
@@ -16,6 +16,11 @@ public class Result<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
+     * 成功标志
+     */
+    private boolean success = true;
+
+    /**
      * 返回消息
      */
     private String message;
@@ -23,13 +28,12 @@ public class Result<T> implements Serializable {
     /**
      * 响应Code
      */
-    private int code;
+    private Integer code = 0;
 
     /**
      * 响应数据
      */
     private T data;
-
 
 
     private Result() {

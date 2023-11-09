@@ -15,15 +15,38 @@
             <groupId>com.naidelii.mallchat</groupId>
             <artifactId>mallchat-common-data</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.naidelii.mallchat</groupId>-->
-<!--            <artifactId>mallchat-biz-websocket</artifactId>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>com.naidelii.mallchat</groupId>
-            <artifactId>mallchat-biz-tomcat-websocket</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <artifactId>mallchat-biz-netty-websocket</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <!--  不加这个配置进行打包，运行jar包时会报错-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${boot.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.4.3</version>
+            </plugin>
+
+        </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+    </build>
 
 </project>

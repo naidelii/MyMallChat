@@ -1,4 +1,4 @@
-package com.naidelii.data.entity;
+package com.naidelii.data.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
