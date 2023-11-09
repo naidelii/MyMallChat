@@ -8,6 +8,8 @@ import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
+import io.netty.handler.timeout.IdleState;
+import io.netty.handler.timeout.IdleStateEvent;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -21,6 +23,13 @@ public class NettyWebSocketServerHandler extends SimpleChannelInboundHandler<Tex
     public void userEventTriggered(ChannelHandlerContext context, Object event) {
         if (event instanceof WebSocketServerProtocolHandler.HandshakeComplete) {
             log.info("握手完成");
+        } else if (event instanceof IdleStateEvent) {
+            IdleStateEvent idleStateEvent = (IdleStateEvent) event;
+            // 如果是读空闲（30秒都都没有收到心跳包）
+            if (idleStateEvent.state() == IdleState.READER_IDLE) {
+                // 关闭用户的连接
+                context.channel().close();
+            }
         }
     }
 

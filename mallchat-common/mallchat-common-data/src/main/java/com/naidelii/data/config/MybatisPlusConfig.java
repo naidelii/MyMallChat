@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
  * @author naidelii
  */
 @Configuration
-@MapperScan("com.naidelii.*.mapper")
+@MapperScan({"com.naidelii.chat.**.mapper"})
 public class MybatisPlusConfig {
 
     @Bean

@@ -9,3 +9,13 @@ mallchat:
     host: 192.168.230.7
     port: 6379
     password: ManHui20!&
+
+# 微信公众号配置
+wx:
+  mp:
+    callback:
+    configs:
+      - appId: wxeb111b0b780f28f9
+        secret: daeba080db010d6c912a467cda175704
+        token:
+        aesKey:
