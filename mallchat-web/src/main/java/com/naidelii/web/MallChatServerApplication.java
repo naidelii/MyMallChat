@@ -1,4 +1,4 @@
-package com.naidelii.chat;
+package com.naidelii.web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

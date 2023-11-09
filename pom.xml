@@ -12,9 +12,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>mallchat-chat-server</module>
         <module>mallchat-common</module>
         <module>mallchat-biz</module>
+        <module>mallchat-web</module>
     </modules>
 
     <!-- 依赖管理：继承SpringBoot，后续子模块都是基于SpringBoot进行开发

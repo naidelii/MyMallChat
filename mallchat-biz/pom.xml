@@ -12,6 +12,7 @@
     <modules>
         <module>mallchat-biz-netty-websocket</module>
         <module>mallchat-biz-tomcat-websocket</module>
+        <module>mallchat-biz-chat</module>
     </modules>
 
 </project>
