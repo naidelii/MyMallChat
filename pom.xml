@@ -91,7 +91,12 @@
             </dependency>
             <dependency>
                 <groupId>com.naidelii.mallchat</groupId>
-                <artifactId>mallchat-biz-websocket</artifactId>
+                <artifactId>mallchat-biz-tomcat-websocket</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.naidelii.mallchat</groupId>
+                <artifactId>mallchat-biz-netty-websocket</artifactId>
                 <version>${version}</version>
             </dependency>
         </dependencies>

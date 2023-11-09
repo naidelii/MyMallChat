@@ -10,8 +10,8 @@
     <artifactId>mallchat-biz</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>mallchat-biz-websocket</module>
-        <module>mallchat-biz-ws</module>
+        <module>mallchat-biz-netty-websocket</module>
+        <module>mallchat-biz-tomcat-websocket</module>
     </modules>
 
 </project>

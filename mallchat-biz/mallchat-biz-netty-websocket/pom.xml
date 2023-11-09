@@ -7,14 +7,17 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>mallchat-biz-ws</artifactId>
+    <artifactId>mallchat-biz-netty-websocket</artifactId>
 
     <dependencies>
-        <!--webSocket-->
+        <!-- netty -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-websocket</artifactId>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.naidelii.mallchat</groupId>
+            <artifactId>mallchat-common-base</artifactId>
         </dependency>
     </dependencies>
-
 </project>

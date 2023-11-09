@@ -21,7 +21,7 @@
 <!--        </dependency>-->
         <dependency>
             <groupId>com.naidelii.mallchat</groupId>
-            <artifactId>mallchat-biz-ws</artifactId>
+            <artifactId>mallchat-biz-tomcat-websocket</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
