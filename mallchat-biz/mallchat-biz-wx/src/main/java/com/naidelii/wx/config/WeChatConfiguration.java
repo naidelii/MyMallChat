@@ -1,7 +1,9 @@
 package com.naidelii.wx.config;
 
+import com.naidelii.wx.service.handler.MsgHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
 import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
@@ -21,6 +23,7 @@ import org.springframework.context.annotation.Configuration;
 public class WeChatConfiguration {
 
     private final WeChatProperties properties;
+    private final MsgHandler msgHandler;
 
     @Bean
     public WxMpService wxMpService() {
@@ -36,6 +39,19 @@ public class WeChatConfiguration {
         config.setAesKey(properties.getAesKey());
         service.setWxMpConfigStorage(config);
         return service;
+    }
+
+    @Bean
+    public WxMpMessageRouter messageRouter(WxMpService wxMpService) {
+        final WxMpMessageRouter router = new WxMpMessageRouter(wxMpService);
+        // 关注事件
+//        router.rule().async(false).msgType(EVENT).event(SUBSCRIBE).handler(this.subscribeHandler).end();
+
+//        // 扫码事件
+//        router.rule().async(false).msgType(EVENT).event(WxConsts.EventType.SCAN).handler(this.scanHandler).end();
+        // 默认
+        router.rule().async(false).handler(msgHandler).end();
+        return router;
     }
 
 }

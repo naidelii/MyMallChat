@@ -22,12 +22,4 @@ public class SubscribeHandler extends AbstractHandler {
         return null;
     }
 
-    /**
-     * 处理特殊请求，比如如果是扫码进来的，可以做相应处理
-     */
-    private WxMpXmlOutMessage handleSpecial(WxMpService wxMpService,
-                                            WxMpXmlMessage wxMessage) {
-        return null;
-    }
-
 }

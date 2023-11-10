@@ -1,5 +1,6 @@
 package com.naidelii.wx.service.handler;
 
+import com.naidelii.wx.service.adapter.MessageTextBuilder;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
@@ -20,7 +21,9 @@ public class MsgHandler extends AbstractHandler {
                                     Map<String, Object> context,
                                     WxMpService wxMpService,
                                     WxSessionManager sessionManager) {
-        return null;
+        // 组装回复消息
+        String content = "你好";
+        return new MessageTextBuilder().build(content, wxMessage);
 
     }
 
