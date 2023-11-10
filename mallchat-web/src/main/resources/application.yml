@@ -1,3 +1,18 @@
+# 开发环境配置
+server:
+  # 服务端口
+  port: 8088
+  servlet:
+    # 项目contextPath
+    context-path: /
+  tomcat:
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+    # tomcat最大线程数，默认为200 初始化的线程数，默认值10
+    threads:
+      max: 200
+      min-spare: 10
+
 spring:
   profiles:
     # 环境 dev|test|prod

@@ -1,21 +1,24 @@
 mallchat:
   mysql:
-    ip: 192.168.230.7
+    ip: 192.168.3.32
     port: 3306
     db: mall_chat
     username: root
-    password: Mh.123456
+    password: 123456
   redis:
-    host: 192.168.230.7
+    host: 192.168.3.32
     port: 6379
-    password: ManHui20!&
+    password: 123456
 
 # 微信公众号配置
 wx:
   mp:
-    callback:
-    configs:
-      - appId: wxeb111b0b780f28f9
-        secret: daeba080db010d6c912a467cda175704
-        token:
-        aesKey:
+    # 内网穿透域名
+    callback: http://nat.naidelii.top
+    config:
+      appId: wxeb111b0b780f28f9
+      secret: daeba080db010d6c912a467cda175704
+      # 接口配置的token值
+      token: naidelii
+      # 接口配置里的EncodingAESKey值，测试号不用（线上的服务需要配置）
+      aesKey:
