@@ -1,6 +1,5 @@
 package com.naidelii.chat.ws.handler;
 
-import com.naidelii.chat.ws.handler.WebSocketServerListenerHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;

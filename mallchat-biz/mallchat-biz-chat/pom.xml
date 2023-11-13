@@ -21,5 +21,9 @@
             <groupId>com.naidelii.mallchat</groupId>
             <artifactId>mallchat-biz-netty</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.naidelii.mallchat</groupId>
+            <artifactId>mallchat-biz-wx</artifactId>
+        </dependency>
     </dependencies>
 </project>
