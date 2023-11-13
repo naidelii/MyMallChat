@@ -18,7 +18,7 @@ public enum WebSocketRequestTypeEnum {
     /**
      * 登录请求时，返回认证的二维码
      */
-    LOGIN(1),
+    AUTHENTICATION(1),
 
     /**
      * 心跳包

@@ -1,6 +1,6 @@
 package com.naidelii.chat.ws.config;
 
-import com.naidelii.chat.ws.handler.WebSocketConnectionHandler;
+import com.naidelii.chat.ws.service.handler.WebSocketConnectionHandler;
 import com.naidelii.websocket.config.NettyProperties;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelOption;

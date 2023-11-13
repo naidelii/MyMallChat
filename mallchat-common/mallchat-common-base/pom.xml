@@ -27,6 +27,10 @@
             <artifactId>hutool-json</artifactId>
         </dependency>
         <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-extra</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.naidelii.mallchat</groupId>
             <artifactId>mallchat-common-swagger</artifactId>
         </dependency>

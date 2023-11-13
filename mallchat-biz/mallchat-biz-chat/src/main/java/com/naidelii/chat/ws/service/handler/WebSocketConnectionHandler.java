@@ -1,4 +1,4 @@
-package com.naidelii.chat.ws.handler;
+package com.naidelii.chat.ws.service.handler;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;

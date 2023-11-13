@@ -1,8 +1,10 @@
-package com.naidelii.chat.ws.handler;
+package com.naidelii.chat.ws.service.handler;
 
+import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.json.JSONUtil;
 import com.naidelii.chat.ws.domain.enums.WebSocketRequestTypeEnum;
 import com.naidelii.chat.ws.domain.vo.request.WebSocketRequest;
+import com.naidelii.chat.ws.service.IWebSocketService;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -19,6 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 @ChannelHandler.Sharable
 public class WebSocketServerListenerHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
 
+    private IWebSocketService webSocketService;
+
     /**
      * 客户端上线的时候调用
      *
@@ -27,8 +31,11 @@ public class WebSocketServerListenerHandler extends SimpleChannelInboundHandler<
      */
     @Override
     public void channelActive(ChannelHandlerContext context) throws Exception {
-        log.info("{}客户端连接进来了", context.channel().remoteAddress());
-        context.fireChannelActive();
+        log.info("{}客户端上线", context.channel().remoteAddress());
+        // 通过Spring上下文容器获取WebSocketService的实现类
+        webSocketService = SpringUtil.getBean(IWebSocketService.class);
+        // 调用上线方法（保存这个通道）
+        webSocketService.online(context.channel());
     }
 
     /**
@@ -39,8 +46,9 @@ public class WebSocketServerListenerHandler extends SimpleChannelInboundHandler<
      */
     @Override
     public void channelInactive(ChannelHandlerContext context) throws Exception {
-        log.info("{}连接断开了", context.channel().remoteAddress());
-        context.fireChannelInactive();
+        log.info("{}客户端下线", context.channel().remoteAddress());
+        // 调用下线方法（删除这个通道）
+        webSocketService.offline(context.channel());
     }
 
     @Override
@@ -74,7 +82,7 @@ public class WebSocketServerListenerHandler extends SimpleChannelInboundHandler<
         // 获取到对应的类型
         WebSocketRequestTypeEnum typeEnum = WebSocketRequestTypeEnum.of(bean.getType());
         switch (typeEnum) {
-            case LOGIN:
+            case AUTHENTICATION:
                 System.out.println("请求二维码");
                 break;
             case HEARTBEAT:
