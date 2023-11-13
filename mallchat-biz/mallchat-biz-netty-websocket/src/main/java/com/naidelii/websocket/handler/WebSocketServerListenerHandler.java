@@ -1,10 +1,10 @@
-package com.naidelii.websocket;
+package com.naidelii.websocket.handler;
 
 import cn.hutool.json.JSONUtil;
 import com.naidelii.websocket.domain.enums.WebSocketRequestTypeEnum;
 import com.naidelii.websocket.domain.vo.request.WebSocketRequest;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
@@ -16,8 +16,8 @@ import lombok.extern.slf4j.Slf4j;
  * @author naidelii
  */
 @Slf4j
-@Sharable
-public class NettyWebSocketServerHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
+@ChannelHandler.Sharable
+public class WebSocketServerListenerHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
 
     @Override
     public void userEventTriggered(ChannelHandlerContext context, Object event) {

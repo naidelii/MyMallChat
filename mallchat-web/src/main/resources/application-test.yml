@@ -22,3 +22,10 @@ wx:
       token: naidelii
       # 接口配置里的EncodingAESKey值，测试号不用（线上的服务需要配置）
       aesKey:
+
+# netty配置
+netty:
+  port: 8090
+  bossExecutor: 1
+  workerExecutor: 4
+  timeout: 3000
