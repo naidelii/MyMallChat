@@ -1,4 +1,4 @@
-package com.naidelii.websocket.domain.enums;
+package com.naidelii.chat.ws.domain.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,6 +1,6 @@
-package com.naidelii.websocket.domain.enums;
+package com.naidelii.chat.ws.domain.enums;
 
-import com.naidelii.websocket.domain.vo.response.LoginUrl;
+import com.naidelii.chat.ws.domain.vo.response.LoginUrl;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

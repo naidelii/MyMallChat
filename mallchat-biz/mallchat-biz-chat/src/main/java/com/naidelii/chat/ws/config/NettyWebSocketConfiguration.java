@@ -1,5 +1,6 @@
-package com.naidelii.websocket.config;
+package com.naidelii.chat.ws.config;
 
+import com.naidelii.websocket.config.NettyProperties;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -15,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableConfigurationProperties(NettyProperties.class)
 @RequiredArgsConstructor
-public class NettyConfiguration {
+public class NettyWebSocketConfiguration {
 
     private final NettyProperties properties;
 

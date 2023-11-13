@@ -1,4 +1,4 @@
-package com.naidelii.websocket;
+package com.naidelii.chat.ws;
 
 import com.naidelii.websocket.config.NettyProperties;
 import io.netty.bootstrap.ServerBootstrap;

@@ -17,5 +17,9 @@
             <groupId>com.naidelii.mallchat</groupId>
             <artifactId>mallchat-common-base</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.naidelii.mallchat</groupId>
+            <artifactId>mallchat-biz-netty</artifactId>
+        </dependency>
     </dependencies>
 </project>

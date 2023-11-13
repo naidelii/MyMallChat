@@ -1,8 +1,8 @@
-package com.naidelii.websocket.handler;
+package com.naidelii.chat.ws.handler;
 
 import cn.hutool.json.JSONUtil;
-import com.naidelii.websocket.domain.enums.WebSocketRequestTypeEnum;
-import com.naidelii.websocket.domain.vo.request.WebSocketRequest;
+import com.naidelii.chat.ws.domain.enums.WebSocketRequestTypeEnum;
+import com.naidelii.chat.ws.domain.vo.request.WebSocketRequest;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

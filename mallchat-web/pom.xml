@@ -17,10 +17,6 @@
         </dependency>
         <dependency>
             <groupId>com.naidelii.mallchat</groupId>
-            <artifactId>mallchat-biz-netty-websocket</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.naidelii.mallchat</groupId>
             <artifactId>mallchat-biz-wx</artifactId>
         </dependency>
         <dependency>

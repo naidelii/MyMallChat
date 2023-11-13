@@ -1,5 +1,6 @@
-package com.naidelii.websocket.domain.vo.request;
+package com.naidelii.chat.ws.domain.vo.request;
 
+import com.naidelii.chat.ws.domain.enums.WebSocketRequestTypeEnum;
 import lombok.Data;
 
 /**
@@ -9,7 +10,7 @@ import lombok.Data;
 public class WebSocketRequest {
     /**
      * 类型
-     * @see com.naidelii.websocket.domain.enums.WebSocketRequestTypeEnum
+     * @see WebSocketRequestTypeEnum
      */
     private Integer type;
 

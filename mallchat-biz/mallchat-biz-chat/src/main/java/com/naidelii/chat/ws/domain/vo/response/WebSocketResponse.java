@@ -1,4 +1,4 @@
-package com.naidelii.websocket.domain.vo.response;
+package com.naidelii.chat.ws.domain.vo.response;
 
 import lombok.Data;
 
