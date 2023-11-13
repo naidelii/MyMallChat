@@ -1,4 +1,4 @@
-package com.naidelii.chat.ws.config;
+package com.naidelii.chat.ws.handler;
 
 import com.naidelii.chat.ws.handler.WebSocketServerListenerHandler;
 import io.netty.channel.ChannelInitializer;

@@ -1,5 +1,6 @@
 package com.naidelii.chat.ws.config;
 
+import com.naidelii.chat.ws.handler.WebSocketConnectionHandler;
 import com.naidelii.websocket.config.NettyProperties;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelOption;
@@ -19,28 +20,8 @@ import org.springframework.context.annotation.Configuration;
 public class NettyWebSocketConfiguration {
 
     private final NettyProperties properties;
-
-    /**
-     * boss 线程池
-     * 负责客户端连接
-     *
-     * @return NioEventLoopGroup
-     */
-    @Bean(name = "bossGroup")
-    public NioEventLoopGroup boosGroup() {
-        return new NioEventLoopGroup(properties.getBossExecutor());
-    }
-
-    /**
-     * worker线程池
-     * 负责业务处理
-     *
-     * @return NioEventLoopGroup
-     */
-    @Bean(name = "workerGroup")
-    public NioEventLoopGroup workerGroup() {
-        return new NioEventLoopGroup(properties.getWorkerExecutor());
-    }
+    private final NioEventLoopGroup bossGroup;
+    private final NioEventLoopGroup workerGroup;
 
     /**
      * 服务器启动器
@@ -52,7 +33,7 @@ public class NettyWebSocketConfiguration {
         ServerBootstrap serverBootstrap = new ServerBootstrap();
         serverBootstrap
                 // 指定使用的线程组
-                .group(boosGroup(), workerGroup())
+                .group(bossGroup, workerGroup)
                 // 指定使用的通道（ServerSocketChannel是以NIO的selector为基础进行实现的，
                 // 用来接收新的连接，这里告诉Channel通过NioServerSocketChannel获取新的连接）
                 .channel(NioServerSocketChannel.class)
