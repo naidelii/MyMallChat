@@ -7,7 +7,7 @@ import lombok.Data;
  * @author naidelii
  */
 @Data
-public class WebSocketRequest {
+public class WebSocketRequestMessage {
     /**
      * 类型
      * @see WebSocketRequestTypeEnum

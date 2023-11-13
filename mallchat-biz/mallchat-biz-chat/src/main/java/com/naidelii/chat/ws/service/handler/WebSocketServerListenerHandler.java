@@ -2,8 +2,7 @@ package com.naidelii.chat.ws.service.handler;
 
 import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.json.JSONUtil;
-import com.naidelii.chat.ws.domain.enums.WebSocketRequestTypeEnum;
-import com.naidelii.chat.ws.domain.vo.request.WebSocketRequest;
+import com.naidelii.chat.ws.domain.vo.request.WebSocketRequestMessage;
 import com.naidelii.chat.ws.service.IWebSocketService;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -78,18 +77,9 @@ public class WebSocketServerListenerHandler extends SimpleChannelInboundHandler<
         String text = message.text();
         log.info("接收到的新消息：{}", text);
         // 转为实体类
-        WebSocketRequest bean = JSONUtil.toBean(text, WebSocketRequest.class);
-        // 获取到对应的类型
-        WebSocketRequestTypeEnum typeEnum = WebSocketRequestTypeEnum.of(bean.getType());
-        switch (typeEnum) {
-            case AUTHENTICATION:
-                System.out.println("请求二维码");
-                break;
-            case HEARTBEAT:
-                break;
-            default:
-                log.warn("未知类型");
-        }
+        WebSocketRequestMessage request = JSONUtil.toBean(text, WebSocketRequestMessage.class);
+        // 处理消息
+        webSocketService.handleMessage(request);
     }
 
     /**

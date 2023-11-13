@@ -28,7 +28,12 @@ public enum WebSocketRequestTypeEnum {
     /**
      * 登录认证
      */
-    AUTHORIZE(3);
+    AUTHORIZE(3),
+
+    /**
+     * 未知消息
+     */
+    UNKNOWN(-1);
 
     /**
      * 类型

@@ -6,9 +6,9 @@ import lombok.Data;
  * @author naidelii
  */
 @Data
-public class WebSocketResponse<T> {
+public class WebSocketResponseMessage<T> {
     /**
-     * @see com.naidelii.chat.domain.enums.WebSocketResponseTypeEnum
+     * @see com.naidelii.chat.ws.domain.enums.WebSocketResponseTypeEnum
      */
     private Integer type;
 
