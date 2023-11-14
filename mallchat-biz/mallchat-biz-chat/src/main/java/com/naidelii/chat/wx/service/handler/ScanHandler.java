@@ -1,5 +1,8 @@
-package com.naidelii.wx.service.handler;
+package com.naidelii.chat.wx.service.handler;
 
+import com.naidelii.wx.service.handler.AbstractHandler;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
@@ -10,9 +13,14 @@ import java.util.Map;
 
 /**
  * @author naidelii
+ * 扫码事件
  */
 @Component
+@RequiredArgsConstructor
+@Slf4j
 public class ScanHandler extends AbstractHandler {
+
+    private final WeChatHandler weChatHandler;
 
 
     @Override
@@ -21,7 +29,7 @@ public class ScanHandler extends AbstractHandler {
                                     WxMpService wxMpService,
                                     WxSessionManager wxSessionManager) {
         // 扫码事件处理
-        return null;
+        return weChatHandler.getAuthorizationLink(wxMpXmlMessage);
     }
 
 }

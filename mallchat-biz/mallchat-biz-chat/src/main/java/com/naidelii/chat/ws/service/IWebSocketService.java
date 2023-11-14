@@ -1,6 +1,6 @@
 package com.naidelii.chat.ws.service;
 
-import com.naidelii.chat.ws.domain.vo.request.WebSocketRequestMessage;
+import com.naidelii.chat.ws.domain.vo.response.ResponseMessage;
 import io.netty.channel.Channel;
 
 /**
@@ -10,19 +10,24 @@ public interface IWebSocketService {
 
     /**
      * 客户端上线
+     *
      * @param channel channel
      */
     void online(Channel channel);
 
     /**
      * 客户端下线
+     *
      * @param channel channel
      */
     void offline(Channel channel);
 
+
     /**
-     * 处理消息
-     * @param request 消息
+     * 发送消息
+     *
+     * @param channel channel
+     * @param message message
      */
-    void handleMessage(WebSocketRequestMessage request);
+    void sendMessage(Channel channel, ResponseMessage<?> message);
 }

@@ -14,7 +14,10 @@ mallchat:
 wx:
   mp:
     # 内网穿透域名
-    callback: http://nat.naidelii.top
+    domain: https://788sl31695.yicp.fun
+    callback: /wx/callBack
+    # 过期时间10分钟
+    codeExpirationTime: 6000
     config:
       appId: wxeb111b0b780f28f9
       secret: daeba080db010d6c912a467cda175704

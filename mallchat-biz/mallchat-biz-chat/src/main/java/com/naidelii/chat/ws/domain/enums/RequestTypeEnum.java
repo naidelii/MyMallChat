@@ -13,12 +13,12 @@ import java.util.stream.Collectors;
  */
 @AllArgsConstructor
 @Getter
-public enum WebSocketRequestTypeEnum {
+public enum RequestTypeEnum {
 
     /**
      * 登录请求时，返回认证的二维码
      */
-    AUTHENTICATION(1),
+    LOGIN(1),
 
     /**
      * 心跳包
@@ -43,13 +43,13 @@ public enum WebSocketRequestTypeEnum {
     /**
      * 缓存到内存中
      */
-    private static final Map<Integer, WebSocketRequestTypeEnum> CACHE;
+    private static final Map<Integer, RequestTypeEnum> CACHE;
 
     static {
-        CACHE = Arrays.stream(WebSocketRequestTypeEnum.values()).collect(Collectors.toMap(WebSocketRequestTypeEnum::getType, Function.identity()));
+        CACHE = Arrays.stream(RequestTypeEnum.values()).collect(Collectors.toMap(RequestTypeEnum::getType, Function.identity()));
     }
 
-    public static WebSocketRequestTypeEnum of(Integer type) {
+    public static RequestTypeEnum of(Integer type) {
         return CACHE.get(type);
     }
 

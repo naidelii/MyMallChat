@@ -1,9 +1,10 @@
 package com.naidelii.chat.ws.service.handler;
 
 import cn.hutool.extra.spring.SpringUtil;
-import cn.hutool.json.JSONUtil;
-import com.naidelii.chat.ws.domain.vo.request.WebSocketRequestMessage;
-import com.naidelii.chat.ws.service.IWebSocketService;
+import com.naidelii.chat.ws.domain.vo.request.RequestMessage;
+import com.naidelii.chat.ws.service.RequestMessageStrategyHandler;
+import com.naidelii.chat.ws.service.adapter.MessageAdapter;
+import com.naidelii.exception.MallChatException;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -19,8 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @ChannelHandler.Sharable
 public class WebSocketServerListenerHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
-
-    private IWebSocketService webSocketService;
+    private RequestMessageHandler requestMessageHandler;
+    private EventHandler eventHandler;
 
     /**
      * 客户端上线的时候调用
@@ -31,10 +32,12 @@ public class WebSocketServerListenerHandler extends SimpleChannelInboundHandler<
     @Override
     public void channelActive(ChannelHandlerContext context) throws Exception {
         log.info("{}客户端上线", context.channel().remoteAddress());
-        // 通过Spring上下文容器获取WebSocketService的实现类
-        webSocketService = SpringUtil.getBean(IWebSocketService.class);
+        // 通过Spring上下文容器获取EventHandler
+        eventHandler = SpringUtil.getBean(EventHandler.class);
+        // 通过Spring上下文容器获取EventHandler
+        requestMessageHandler = SpringUtil.getBean(RequestMessageHandler.class);
         // 调用上线方法（保存这个通道）
-        webSocketService.online(context.channel());
+        eventHandler.online(context.channel());
     }
 
     /**
@@ -47,9 +50,15 @@ public class WebSocketServerListenerHandler extends SimpleChannelInboundHandler<
     public void channelInactive(ChannelHandlerContext context) throws Exception {
         log.info("{}客户端下线", context.channel().remoteAddress());
         // 调用下线方法（删除这个通道）
-        webSocketService.offline(context.channel());
+        eventHandler.offline(context.channel());
     }
 
+    /**
+     * 服务端当read超时, 会调用这个方法
+     *
+     * @param context 上下文
+     * @param event   异常
+     */
     @Override
     public void userEventTriggered(ChannelHandlerContext context, Object event) {
         if (event instanceof WebSocketServerProtocolHandler.HandshakeComplete) {
@@ -77,9 +86,11 @@ public class WebSocketServerListenerHandler extends SimpleChannelInboundHandler<
         String text = message.text();
         log.info("接收到的新消息：{}", text);
         // 转为实体类
-        WebSocketRequestMessage request = JSONUtil.toBean(text, WebSocketRequestMessage.class);
-        // 处理消息
-        webSocketService.handleMessage(request);
+        RequestMessage request = MessageAdapter.buildRequestMessage(text);
+        // 根据消息类型获取对应的处理器
+        RequestMessageStrategyHandler handler = requestMessageHandler.getHandlerByType(request.getType());
+        // 使用处理器处理消息
+        handler.handleMessage(request.getData(), context.channel());
     }
 
     /**
@@ -91,7 +102,12 @@ public class WebSocketServerListenerHandler extends SimpleChannelInboundHandler<
      */
     @Override
     public void exceptionCaught(ChannelHandlerContext context, Throwable cause) throws Exception {
-        log.error("{}连接出异常了", context.channel().remoteAddress());
-        context.close();
+        // 打印异常信息
+        log.error("{}连接出异常：{}", context.channel().remoteAddress(), cause.getMessage());
+        // 如果是项目内异常则不关闭连接
+        if (!(cause instanceof MallChatException)) {
+            // 关闭连接
+            context.close();
+        }
     }
 }

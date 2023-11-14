@@ -61,7 +61,9 @@ mybatis-plus:
 # wx配置
 wx:
   mp:
+    domain: ${mallchat.wx.callback}
     callback: ${mallchat.wx.callback}
+    codeExpirationTime: ${mallchat.wx.codeExpirationTime}
     config:
       appId: ${mallchat.wx.appId} # 第一个公众号的appid
       secret: ${mallchat.wx.secret} # 公众号的appsecret

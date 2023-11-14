@@ -14,7 +14,10 @@ mallchat:
 wx:
   mp:
     # 内网穿透域名
-    callback: https://788sl31695.yicp.fun
+    domain: https://788sl31695.yicp.fun
+    callback: /chat/officialAccount/callBack
+    # 过期时间10分钟
+    codeExpirationTime: 6000
     config:
       appId: wxeb111b0b780f28f9
       secret: daeba080db010d6c912a467cda175704
@@ -28,4 +31,4 @@ netty:
   port: 8090
   bossExecutor: 1
   workerExecutor: 4
-  timeout: 3000
+  timeout: 30000

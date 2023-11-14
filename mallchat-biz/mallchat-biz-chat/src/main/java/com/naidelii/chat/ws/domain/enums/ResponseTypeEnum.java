@@ -9,7 +9,7 @@ import lombok.Getter;
  */
 @AllArgsConstructor
 @Getter
-public enum WebSocketResponseTypeEnum {
+public enum ResponseTypeEnum {
 
     /**
      * 登录二维码返回

@@ -15,6 +15,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LoginUrl {
 
-
     private String loginUrl;
 }

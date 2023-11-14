@@ -37,6 +37,7 @@
         <netty-all.version>4.1.76.Final</netty-all.version>
         <knife4j.version>2.0.9</knife4j.version>
         <hutool.version>5.8.18</hutool.version>
+        <caffeine.version>2.9.3</caffeine.version>
     </properties>
 
     <!-- 对子项目的依赖版本进行管理，不会实际引入jar -->
@@ -136,6 +137,11 @@
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
                 <version>${servlet-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.ben-manes.caffeine</groupId>
+                <artifactId>caffeine</artifactId>
+                <version>${caffeine.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

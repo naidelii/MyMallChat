@@ -55,10 +55,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(MallChatException.class)
     public Result<?> handlerMallChatException(MallChatException e) {
-        log.info("MallChat exception！The reason is：{}", e.getMessage(), e);
+        log.error("MallChat exception！The reason is：{}", e.getMessage(), e);
         return Result.error(e.getMessage());
     }
-
 
     /**
      * 处理参数校验错误
