@@ -1,10 +1,16 @@
 package com.naidelii.chat.wx.controller;
 
 import cn.hutool.json.JSONUtil;
+import com.naidelii.chat.wx.service.IWeChatService;
+import com.naidelii.constant.CommonConstants;
 import com.naidelii.exception.MallChatException;
 import com.naidelii.wx.service.adapter.MessageTextBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
+import me.chanjar.weixin.common.bean.oauth2.WxOAuth2AccessToken;
+import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.service.WxOAuth2Service;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
@@ -21,15 +27,59 @@ import org.springframework.web.servlet.view.RedirectView;
 @RequestMapping("/chat/officialAccount")
 public class OfficialAccountController {
 
-    private final WxMpService wxService;
+    private final WxMpService wxMpService;
+    private final IWeChatService weChatService;
     private final WxMpMessageRouter messageRouter;
 
-    @GetMapping("/callBack")
-    public RedirectView callBack(@RequestParam String code) {
-        log.info("\n消息内容：{}", code);
-        return null;
+    /**
+     * 验签
+     *
+     * @param signature 微信加密签名
+     * @param timestamp 时间戳
+     * @param nonce     随机数
+     * @param echostr   随机字符串
+     * @return String
+     */
+    @GetMapping
+    public String authGet(@RequestParam(name = "signature") String signature,
+                          @RequestParam(name = "timestamp") String timestamp,
+                          @RequestParam(name = "nonce") String nonce,
+                          @RequestParam(name = "echostr") String echostr) {
+
+        log.info("\n接收到来自微信服务器的认证消息：[{}, {}, {}, {}]", signature, timestamp, nonce, echostr);
+        // 校验签名
+        if (wxMpService.checkSignature(timestamp, nonce, signature)) {
+            return echostr;
+        }
+        return "非法请求";
     }
 
+    /**
+     * 微信点击身份认证的接口回调
+     *
+     * @param code 接口调用凭证
+     * @return RedirectView
+     * @throws WxErrorException WxErrorException
+     */
+    @GetMapping("/callBack")
+    public RedirectView callBack(@RequestParam String code) throws WxErrorException {
+        log.info("\ncallBack code：{}", code);
+        try {
+            WxOAuth2Service oAuth2Service = wxMpService.getOAuth2Service();
+            // 根据code获取token
+            WxOAuth2AccessToken accessToken = oAuth2Service.getAccessToken(code);
+            // 根据token获取用户信息
+            WxOAuth2UserInfo userInfo = oAuth2Service.getUserInfo(accessToken, CommonConstants.CHINESE);
+            // 用户授权
+            weChatService.authorization(userInfo);
+        } catch (Exception e) {
+            log.error("callBack error！", e);
+        }
+        // 重定向指定网站
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl("https://gpt.naidelii.top");
+        return redirectView;
+    }
 
     /**
      * 接收微信的事件推送：例如关注公众号、取消关注、发消息等
@@ -44,7 +94,7 @@ public class OfficialAccountController {
                                     @RequestParam("timestamp") String timestamp,
                                     @RequestParam("nonce") String nonce) {
         // 验签
-        if (!wxService.checkSignature(timestamp, nonce, signature)) {
+        if (!wxMpService.checkSignature(timestamp, nonce, signature)) {
             log.error("验签未通过，可能属于伪造的请求！");
             throw new MallChatException("非法请求！");
         }

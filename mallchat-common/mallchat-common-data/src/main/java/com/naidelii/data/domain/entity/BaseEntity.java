@@ -3,6 +3,7 @@ package com.naidelii.data.domain.entity;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -12,6 +13,7 @@ import java.util.Date;
  * @author yong
  * Entity基类
  */
+@Data
 public class BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -43,6 +45,5 @@ public class BaseEntity implements Serializable {
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     protected Date updateTime;
-
 
 }

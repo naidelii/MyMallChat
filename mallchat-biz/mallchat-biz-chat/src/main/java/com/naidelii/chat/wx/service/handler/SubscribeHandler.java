@@ -1,6 +1,7 @@
 package com.naidelii.chat.wx.service.handler;
 
 import cn.hutool.core.util.StrUtil;
+import com.naidelii.chat.wx.service.IWeChatService;
 import com.naidelii.wx.service.adapter.MessageTextBuilder;
 import com.naidelii.wx.service.handler.AbstractHandler;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class SubscribeHandler extends AbstractHandler {
 
-    private final WeChatHandler weChatHandler;
+    private final IWeChatService weChatService;
 
     @Override
     public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage,
@@ -33,7 +34,7 @@ public class SubscribeHandler extends AbstractHandler {
         String event = wxMessage.getEventKey();
         // 通过扫码的方式进行关注
         if (!StrUtil.isBlank(event)) {
-            return weChatHandler.getAuthorizationLink(wxMessage);
+            return weChatService.scan(wxMessage);
         }
         // 回复默认消息
         String content = "感谢关注";

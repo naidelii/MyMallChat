@@ -4,8 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.naidelii.data.domain.entity.BaseEntity;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.util.Date;
@@ -18,6 +17,9 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("sys_user")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class SysUser extends BaseEntity {
     private static final long serialVersionUID = 1L;
 

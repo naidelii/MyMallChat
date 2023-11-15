@@ -2,9 +2,11 @@ package com.naidelii.chat.ws.service.handler;
 
 import cn.hutool.extra.spring.SpringUtil;
 import com.naidelii.chat.ws.domain.vo.request.RequestMessage;
+import com.naidelii.chat.ws.service.IWebSocketService;
 import com.naidelii.chat.ws.service.RequestMessageStrategyHandler;
 import com.naidelii.chat.ws.service.adapter.MessageAdapter;
 import com.naidelii.exception.MallChatException;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -21,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @ChannelHandler.Sharable
 public class WebSocketServerListenerHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
     private RequestMessageHandler requestMessageHandler;
-    private EventHandler eventHandler;
+    private IWebSocketService webSocketService;
 
     /**
      * 客户端上线的时候调用
@@ -32,12 +34,12 @@ public class WebSocketServerListenerHandler extends SimpleChannelInboundHandler<
     @Override
     public void channelActive(ChannelHandlerContext context) throws Exception {
         log.info("{}客户端上线", context.channel().remoteAddress());
-        // 通过Spring上下文容器获取EventHandler
-        eventHandler = SpringUtil.getBean(EventHandler.class);
+        // 通过Spring上下文容器获取WebSocketService
+        webSocketService = SpringUtil.getBean(IWebSocketService.class);
         // 通过Spring上下文容器获取EventHandler
         requestMessageHandler = SpringUtil.getBean(RequestMessageHandler.class);
         // 调用上线方法（保存这个通道）
-        eventHandler.online(context.channel());
+        webSocketService.online(context.channel());
     }
 
     /**
@@ -49,8 +51,15 @@ public class WebSocketServerListenerHandler extends SimpleChannelInboundHandler<
     @Override
     public void channelInactive(ChannelHandlerContext context) throws Exception {
         log.info("{}客户端下线", context.channel().remoteAddress());
-        // 调用下线方法（删除这个通道）
-        eventHandler.offline(context.channel());
+        Channel channel = context.channel();
+        offline(channel);
+    }
+
+    private void offline(Channel channel) {
+        // 调用下线方法（移除这个通道）
+        webSocketService.offline(channel);
+        // 主动关闭这个连接
+        channel.close();
     }
 
     /**
@@ -67,8 +76,7 @@ public class WebSocketServerListenerHandler extends SimpleChannelInboundHandler<
             IdleStateEvent idleStateEvent = (IdleStateEvent) event;
             // 如果是读空闲（30秒都都没有收到心跳包）
             if (idleStateEvent.state() == IdleState.READER_IDLE) {
-                // 关闭用户的连接
-                context.channel().close();
+                offline(context.channel());
             }
         }
     }

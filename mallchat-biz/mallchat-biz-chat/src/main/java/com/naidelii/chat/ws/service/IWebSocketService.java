@@ -30,4 +30,27 @@ public interface IWebSocketService {
      * @param message message
      */
     void sendMessage(Channel channel, ResponseMessage<?> message);
+
+    /**
+     * 生成场景码
+     *
+     * @param channel channel
+     * @return 场景码
+     */
+    String generateLoginCode(Channel channel);
+
+    /**
+     * 维护openId和用户的关联
+     *
+     * @param code   code
+     * @param openId openId
+     */
+    void maintainRelationships(String code, String openId);
+
+    /**
+     * 根据openId给对应的用户推送消息
+     *
+     * @param openId openId
+     */
+    void scanLoginSuccess(String openId);
 }

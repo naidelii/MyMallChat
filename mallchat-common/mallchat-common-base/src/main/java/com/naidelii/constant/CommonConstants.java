@@ -21,4 +21,23 @@ public interface CommonConstants {
      */
     String QR_SCENE_PREFIX = "qrscene_";
 
+    /**
+     * 用户激活状态
+     */
+    Integer USER_ACTIVATION_STATE = 1;
+
+    /**
+     * 用户冻结状态
+     */
+    Integer USER_FROZEN_STATE = 2;
+
+    /**
+     * 中文
+     */
+    String CHINESE = "zh_CN";
+
+    /**
+     * 默认的操作人
+     */
+    String DEFAULT_OPERATOR = "system";
 }

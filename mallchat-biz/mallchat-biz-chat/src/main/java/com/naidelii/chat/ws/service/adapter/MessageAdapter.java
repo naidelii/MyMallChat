@@ -1,8 +1,10 @@
 package com.naidelii.chat.ws.service.adapter;
 
 import cn.hutool.json.JSONUtil;
+import com.naidelii.chat.user.domain.entity.SysUser;
 import com.naidelii.chat.ws.domain.enums.ResponseTypeEnum;
 import com.naidelii.chat.ws.domain.vo.request.RequestMessage;
+import com.naidelii.chat.ws.domain.vo.response.LoginSuccess;
 import com.naidelii.chat.ws.domain.vo.response.LoginUrl;
 import com.naidelii.chat.ws.domain.vo.response.ResponseMessage;
 import com.naidelii.exception.MallChatException;
@@ -18,6 +20,20 @@ public class MessageAdapter {
         ResponseMessage<LoginUrl> result = new ResponseMessage<>();
         result.setType(ResponseTypeEnum.LOGIN_URL.getType());
         result.setData(new LoginUrl(url));
+        return result;
+    }
+
+    public static ResponseMessage<LoginSuccess> buildLoginSuccessResp(SysUser user, String token) {
+        ResponseMessage<LoginSuccess> result = new ResponseMessage<>();
+        result.setType(ResponseTypeEnum.LOGIN_SUCCESS.getType());
+        LoginSuccess data = LoginSuccess
+                .builder()
+                .id(user.getId())
+                .avatar(user.getAvatar())
+                .nickname(user.getNickname())
+                .token(token)
+                .build();
+        result.setData(data);
         return result;
     }
 
