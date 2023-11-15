@@ -47,4 +47,9 @@ public class MessageAdapter {
         }
     }
 
+    public static ResponseMessage<?> buildWaitAuthorize() {
+        ResponseMessage<Object> result = new ResponseMessage<>();
+        result.setType(ResponseTypeEnum.LOGIN_SCAN_SUCCESS.getType());
+        return result;
+    }
 }

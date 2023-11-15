@@ -91,7 +91,7 @@ public class WebSocketServiceImpl implements IWebSocketService {
     @Override
     public void maintainRelationships(String code, String openId) {
         // 获取channel（并从内存中删除）
-        Channel channel = WAIT_LOGIN_MAP.asMap().remove(code);
+        Channel channel = WAIT_LOGIN_MAP.getIfPresent(code);
         if (channel == null) {
             log.error("code: {}对应的channel不存在", code);
             throw new MallChatException("用户已离线！");
@@ -105,7 +105,7 @@ public class WebSocketServiceImpl implements IWebSocketService {
         // 确保连接还存在
         Channel channel = WAIT_LOGIN_MAP.getIfPresent(code);
         if (Objects.isNull(channel)) {
-            log.error("{}对应channel不存在", userId);
+            log.error("=========scanLoginSuccess，{}对应channel不存在", userId);
             return;
         }
         // 移除登陆码
@@ -123,6 +123,20 @@ public class WebSocketServiceImpl implements IWebSocketService {
     @Override
     public String getWaitAuthorizeCode(String openId) {
         return WAIT_AUTHORIZE_MAP.asMap().remove(openId);
+    }
+
+    @Override
+    public void waitAuthorize(String code) {
+        // 确保连接还存在
+        Channel channel = WAIT_LOGIN_MAP.getIfPresent(code);
+        if (Objects.isNull(channel)) {
+            log.error("=========waitAuthorize，{}对应channel不存在", code);
+            return;
+        }
+        // 通知前端，现在正在等待用户执行授权
+        ResponseMessage<?> message = MessageAdapter.buildWaitAuthorize();
+        // 发送消息
+        sendMessage(channel, message);
     }
 
 }

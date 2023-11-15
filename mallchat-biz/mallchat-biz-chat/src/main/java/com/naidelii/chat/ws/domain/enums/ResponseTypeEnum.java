@@ -18,9 +18,14 @@ public enum ResponseTypeEnum {
     LOGIN_URL(1, LoginUrl.class),
 
     /**
-     * 登录成功返回
+     * 用户扫码成功，等待授权
      */
-    LOGIN_SUCCESS(2, LoginSuccess.class);
+    LOGIN_SCAN_SUCCESS(2, null),
+
+    /**
+     * 用户登录成功，返回用户信息
+     */
+    LOGIN_SUCCESS(3, LoginSuccess.class);
 
     private final Integer type;
     private final Class<?> dataClass;

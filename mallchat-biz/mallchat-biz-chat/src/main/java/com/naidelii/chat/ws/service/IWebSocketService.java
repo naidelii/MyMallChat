@@ -62,4 +62,10 @@ public interface IWebSocketService {
      * @return 登录码
      */
     String getWaitAuthorizeCode(String openId);
+
+    /**
+     * 等待授权
+     * @param code 登陆码
+     */
+    void waitAuthorize(String code);
 }

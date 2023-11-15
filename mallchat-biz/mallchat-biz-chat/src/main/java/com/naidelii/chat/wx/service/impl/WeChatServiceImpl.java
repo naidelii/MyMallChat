@@ -10,7 +10,6 @@ import com.naidelii.constant.CommonConstants;
 import com.naidelii.exception.MallChatException;
 import com.naidelii.wx.config.WeChatProperties;
 import com.naidelii.wx.service.adapter.MessageTextBuilder;
-import io.netty.channel.Channel;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -90,6 +89,8 @@ public class WeChatServiceImpl implements IWeChatService {
         }
         // 将openId和channel维护起来
         webSocketService.maintainRelationships(code, openId);
+        // 给前端推送一条消息，准备授权
+        webSocketService.waitAuthorize(code);
         // 发送授权链接
         return sendAuthorizationLink(wxMessage);
     }
