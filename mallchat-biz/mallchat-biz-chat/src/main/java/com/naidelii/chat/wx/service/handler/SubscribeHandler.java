@@ -36,7 +36,7 @@ public class SubscribeHandler extends AbstractHandler {
         if (!StrUtil.isBlank(event)) {
             return weChatService.scan(wxMessage);
         }
-        // 回复默认消息
+        // 回复默认消息（不是通过扫码进行关注的）
         String content = "感谢关注";
         return new MessageTextBuilder().build(content, wxMessage);
     }

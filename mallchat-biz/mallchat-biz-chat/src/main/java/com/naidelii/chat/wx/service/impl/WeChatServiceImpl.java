@@ -20,7 +20,6 @@ import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 import me.chanjar.weixin.mp.bean.result.WxMpQrCodeTicket;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
@@ -46,10 +45,14 @@ public class WeChatServiceImpl implements IWeChatService {
     private final WeChatOtherProperties otherProperties;
     private final IWebSocketService webSocketService;
 
+    /**
+     * 生成带参数的临时二维码
+     * @param code 场景值ID
+     * @return 携带二维码的链接
+     */
     @Override
     @SneakyThrows
     public String generateQRCode(String code) {
-        // 生成带参数的临时二维码
         WxMpQrcodeService qrcodeService = wxMpService.getQrcodeService();
         WxMpQrCodeTicket ticket = qrcodeService.qrCodeCreateTmpTicket(code, otherProperties.getCodeExpirationTime());
         return ticket.getUrl();
@@ -117,13 +120,7 @@ public class WeChatServiceImpl implements IWeChatService {
     private void fillUserInfo(String id, WxOAuth2UserInfo userInfo) {
         // 更新用户信息
         SysUser user = UserAdapter.buildAuthorizeUser(id, userInfo);
-        try {
-            userService.updateById(user);
-        } catch (DuplicateKeyException e) {
-            log.info("fill userInfo duplicate uid:{},info:{}", id, userInfo);
-        } catch (Exception e) {
-            log.error("fill userInfo fail uid:{},info:{}", id, userInfo);
-        }
+        userService.updateById(user);
     }
 
     /**

@@ -25,7 +25,6 @@ public class MsgHandler extends AbstractHandler {
         // 组装回复消息
         String content = "你好";
         return new MessageTextBuilder().build(content, wxMessage);
-
     }
 
 }

@@ -1,5 +1,6 @@
 package com.naidelii.web;
 
+import cn.hutool.core.lang.UUID;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpQrcodeService;
 import me.chanjar.weixin.mp.api.WxMpService;
@@ -17,7 +18,11 @@ public class WxMpTest {
     @Test
     public void getAQRCode() throws WxErrorException {
         WxMpQrcodeService qrcodeService = wxMpService.getQrcodeService();
-        WxMpQrCodeTicket wxMpQrCodeTicket = qrcodeService.qrCodeCreateTmpTicket(1, 1000);
+        // 场景值
+        String code = UUID.randomUUID().toString();
+        // 过期时间（单位s）
+        int expireTime = 10 * 60;
+        WxMpQrCodeTicket wxMpQrCodeTicket = qrcodeService.qrCodeCreateTmpTicket(code, expireTime);
         String url = wxMpQrCodeTicket.getUrl();
         System.out.println(url);
     }
