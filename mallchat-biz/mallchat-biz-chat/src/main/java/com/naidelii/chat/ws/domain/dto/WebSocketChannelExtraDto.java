@@ -11,5 +11,5 @@ public class WebSocketChannelExtraDto {
     /**
      * 用户的唯一标识
      */
-    private Long uid;
+    private String uid;
 }

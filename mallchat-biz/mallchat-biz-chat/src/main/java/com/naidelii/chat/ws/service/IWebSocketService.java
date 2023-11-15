@@ -47,10 +47,19 @@ public interface IWebSocketService {
      */
     void maintainRelationships(String code, String openId);
 
+
     /**
-     * 根据openId给对应的用户推送消息
+     * 根据openId完成扫码登录
      *
-     * @param openId openId
+     * @param code 登陆码
+     * @param userId 用户id
      */
-    void scanLoginSuccess(String openId);
+    void scanLoginSuccess(String code, String userId);
+
+    /**
+     * 根据openId获取登陆码
+     * @param openId openId
+     * @return 登录码
+     */
+    String getWaitAuthorizeCode(String openId);
 }

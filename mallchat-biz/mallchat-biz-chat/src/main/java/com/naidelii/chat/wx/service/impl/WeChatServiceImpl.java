@@ -10,6 +10,7 @@ import com.naidelii.constant.CommonConstants;
 import com.naidelii.exception.MallChatException;
 import com.naidelii.wx.config.WeChatProperties;
 import com.naidelii.wx.service.adapter.MessageTextBuilder;
+import io.netty.channel.Channel;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -72,15 +73,14 @@ public class WeChatServiceImpl implements IWeChatService {
         }
         // 微信用户的openId
         String openId = wxMessage.getFromUser();
-        // 将openId和channel维护起来
-        webSocketService.maintainRelationships(code, openId);
         // 根据openId查询用户是否存在
         SysUser dbUser = userService.getByOpenId(openId);
         // 如果已经注册，且已经授权过，则直接走登录成功
         boolean registered = Objects.nonNull(dbUser);
         if (registered && CommonConstants.USER_ACTIVATION_STATE.equals(dbUser.getStatus())) {
             // 通过code找到对应的channel，然后给前端推送消息
-            String content = "操作成功！";
+            webSocketService.scanLoginSuccess(code, dbUser.getId());
+            String content = "登录成功！";
             return new MessageTextBuilder().build(content, wxMessage);
         }
         // 如果用户不存在，则注册
@@ -88,6 +88,8 @@ public class WeChatServiceImpl implements IWeChatService {
             SysUser sysUser = UserAdapter.buildSaveUser(openId);
             userService.register(sysUser);
         }
+        // 将openId和channel维护起来
+        webSocketService.maintainRelationships(code, openId);
         // 发送授权链接
         return sendAuthorizationLink(wxMessage);
     }
@@ -105,8 +107,10 @@ public class WeChatServiceImpl implements IWeChatService {
         if (CommonConstants.USER_FROZEN_STATE.equals(dbUser.getStatus())) {
             fillUserInfo(dbUser.getId(), userInfo);
         }
+        // 通过openId找到code
+        String code = webSocketService.getWaitAuthorizeCode(openId);
         // 给用户推送消息，登录成功
-        webSocketService.scanLoginSuccess(openId);
+        webSocketService.scanLoginSuccess(code, dbUser.getId());
     }
 
     private void fillUserInfo(String id, WxOAuth2UserInfo userInfo) {

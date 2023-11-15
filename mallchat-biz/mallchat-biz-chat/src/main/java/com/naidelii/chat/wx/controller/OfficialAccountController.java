@@ -107,15 +107,20 @@ public class OfficialAccountController {
     }
 
 
+    /**
+     * 路由对应的消息
+     * @param message 收到的消息
+     * @return WxMpXmlOutMessage
+     */
     private WxMpXmlOutMessage route(WxMpXmlMessage message) {
         try {
             log.info("\n消息内容：{}", JSONUtil.toJsonStr(message));
             return messageRouter.route(message);
         } catch (Exception e) {
             log.error("路由消息时出现异常！", e);
+            String content = "服务器开小差了，请稍后再试！";
+            return new MessageTextBuilder().build(content, message);
         }
-        String content = "服务器开小差了，请稍后再试！";
-        return new MessageTextBuilder().build(content, message);
     }
 
 }

@@ -35,4 +35,12 @@ public class UserAdapter {
         user.setUpdateTime(new Date());
         return user;
     }
+
+    public static SysUser buildUpdateUser(String userId) {
+        return SysUser.builder()
+                .id(userId)
+                .lastOptTime(new Date())
+                .activeStatus(CommonConstants.USER_ONLINE_PRESENCE)
+                .build();
+    }
 }

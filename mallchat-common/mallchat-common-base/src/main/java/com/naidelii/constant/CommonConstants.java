@@ -32,6 +32,17 @@ public interface CommonConstants {
     Integer USER_FROZEN_STATE = 2;
 
     /**
+     * 用户在线
+     */
+    Integer USER_ONLINE_PRESENCE = 1;
+
+    /**
+     * 用户离线
+     */
+    Integer USER_OFFLINE_STATUS = 2;
+
+
+    /**
      * 中文
      */
     String CHINESE = "zh_CN";
