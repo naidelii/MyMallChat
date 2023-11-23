@@ -1,4 +1,4 @@
-package com.naidelii.constant;
+package com.naidelii.base.constant;
 
 /**
  * @author naidelii

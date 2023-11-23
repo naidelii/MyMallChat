@@ -12,5 +12,5 @@ public interface ILoginService {
      * @param userId 用户id
      * @return token
      */
-    String loginByCode(String userId);
+    String scanQRCodeLogin(String userId);
 }

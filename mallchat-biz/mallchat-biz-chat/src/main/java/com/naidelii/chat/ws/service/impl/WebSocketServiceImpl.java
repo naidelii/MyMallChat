@@ -12,7 +12,7 @@ import com.naidelii.chat.ws.domain.vo.response.LoginSuccess;
 import com.naidelii.chat.ws.domain.vo.response.ResponseMessage;
 import com.naidelii.chat.ws.service.IWebSocketService;
 import com.naidelii.chat.ws.service.adapter.MessageAdapter;
-import com.naidelii.exception.MallChatException;
+import com.naidelii.base.exception.MallChatException;
 import io.netty.channel.Channel;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.RequiredArgsConstructor;
@@ -113,7 +113,7 @@ public class WebSocketServiceImpl implements IWebSocketService {
         // 获取最新的用户信息
         SysUser user = userService.getById(userId);
         // 调用登录模块，获取token
-        String token = loginService.loginByCode(userId);
+        String token = loginService.scanQRCodeLogin(userId);
         // 将登陆成功的结果返回给前端
         ResponseMessage<LoginSuccess> message = MessageAdapter.buildLoginSuccessResp(user, token);
         // 发送消息

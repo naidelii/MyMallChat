@@ -1,4 +1,4 @@
-package com.naidelii.verify;
+package com.naidelii.base.verify;
 
 /**
  * @author naidelii

@@ -1,7 +1,8 @@
 package com.naidelii.chat.user.service.adapter;
 
 import com.naidelii.chat.user.domain.entity.SysUser;
-import com.naidelii.constant.CommonConstants;
+import com.naidelii.base.constant.CommonConstants;
+import com.naidelii.security.entity.LoginUser;
 import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
 
 import java.util.Date;
@@ -41,6 +42,14 @@ public class UserAdapter {
                 .id(userId)
                 .lastOptTime(new Date())
                 .activeStatus(CommonConstants.USER_ONLINE_PRESENCE)
+                .build();
+    }
+
+    public static LoginUser buildLoginUser(SysUser updateUser) {
+        return LoginUser.builder()
+                .id(updateUser.getId())
+                .nickname(updateUser.getNickname())
+                .avatar(updateUser.getAvatar())
                 .build();
     }
 }

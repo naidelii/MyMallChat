@@ -1,6 +1,6 @@
-package com.naidelii.domain.vo.response;
+package com.naidelii.base.domain.vo.response;
 
-import com.naidelii.constant.enums.ResultEnum;
+import com.naidelii.base.constant.enums.ResultEnum;
 import lombok.Getter;
 import lombok.Setter;
 

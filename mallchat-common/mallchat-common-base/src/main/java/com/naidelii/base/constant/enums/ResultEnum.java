@@ -1,4 +1,4 @@
-package com.naidelii.constant.enums;
+package com.naidelii.base.constant.enums;
 
 import lombok.Getter;
 

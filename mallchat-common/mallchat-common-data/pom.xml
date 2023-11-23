@@ -36,7 +36,7 @@
         </dependency>
         <dependency>
             <groupId>com.naidelii.mallchat</groupId>
-            <artifactId>mallchat-common-base</artifactId>
+            <artifactId>mallchat-common-security</artifactId>
         </dependency>
     </dependencies>
 

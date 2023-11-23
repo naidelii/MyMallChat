@@ -15,7 +15,7 @@ wx:
   mp:
     # 内网穿透域名
     domain: https://788sl31695.yicp.fun
-    callback: /wx/callBack
+    callback: /chat/officialAccount/callBack
     # 过期时间10分钟
     codeExpirationTime: 6000
     config:
@@ -31,4 +31,4 @@ netty:
   port: 8090
   bossExecutor: 1
   workerExecutor: 4
-  timeout: 3000
+  timeout: 30000

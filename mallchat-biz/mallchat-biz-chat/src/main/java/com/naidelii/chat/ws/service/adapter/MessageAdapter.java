@@ -7,7 +7,7 @@ import com.naidelii.chat.ws.domain.vo.request.RequestMessage;
 import com.naidelii.chat.ws.domain.vo.response.LoginSuccess;
 import com.naidelii.chat.ws.domain.vo.response.LoginUrl;
 import com.naidelii.chat.ws.domain.vo.response.ResponseMessage;
-import com.naidelii.exception.MallChatException;
+import com.naidelii.base.exception.MallChatException;
 import lombok.extern.slf4j.Slf4j;
 
 /**

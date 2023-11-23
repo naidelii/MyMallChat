@@ -2,8 +2,8 @@ package com.naidelii.chat.wx.controller;
 
 import cn.hutool.json.JSONUtil;
 import com.naidelii.chat.wx.service.IWeChatService;
-import com.naidelii.constant.CommonConstants;
-import com.naidelii.exception.MallChatException;
+import com.naidelii.base.constant.CommonConstants;
+import com.naidelii.base.exception.MallChatException;
 import com.naidelii.wx.service.adapter.MessageTextBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

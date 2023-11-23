@@ -5,7 +5,7 @@ import com.naidelii.chat.ws.domain.vo.request.RequestMessage;
 import com.naidelii.chat.ws.service.IWebSocketService;
 import com.naidelii.chat.ws.service.RequestMessageStrategyHandler;
 import com.naidelii.chat.ws.service.adapter.MessageAdapter;
-import com.naidelii.exception.MallChatException;
+import com.naidelii.base.exception.MallChatException;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;

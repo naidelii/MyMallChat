@@ -1,4 +1,4 @@
-package com.naidelii.exception;
+package com.naidelii.base.exception;
 
 /**
  * @author naidelii
