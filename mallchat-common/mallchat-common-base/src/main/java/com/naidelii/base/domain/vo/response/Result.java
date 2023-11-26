@@ -16,76 +16,71 @@ public class Result<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 成功标志
-     */
-    private boolean success = true;
-
-    /**
      * 返回消息
      */
-    private String message;
+    private String msg;
 
     /**
      * 响应Code
+     *
+     * @see com.naidelii.base.constant.enums.ResultEnum
      */
-    private Integer code = 0;
+    private Integer code;
 
     /**
      * 响应数据
      */
     private T data;
 
-
+    /**
+     * 私有化构造器
+     */
     private Result() {
+
     }
 
-    private Result(int code, String message) {
-        this.message = message;
-        this.code = code;
+    /**
+     * 默认的成功消息
+     *
+     * @return Result
+     */
+    public static Result<Object> success() {
+        return successData(null);
     }
 
-    public static <T> Result<T> ok() {
-        return ok(ResultEnum.SUCCESS.getMessage());
+    public static Result<Object> success(String msg) {
+        return successData(msg, null);
     }
 
-    public static <T> Result<T> ok(String msg) {
-        return new Result<>(ResultEnum.SUCCESS.getCode(), msg);
+    public static <T> Result<T> successData(T data) {
+        return successData(ResultEnum.SUCCESS.getMessage(), data);
     }
 
-    public static <T> Result<T> okData(T data) {
-        return okData(ResultEnum.SUCCESS.getMessage(), data);
-    }
-
-    public static <T> Result<T> okData(String msg, T data) {
-        Result<T> result = new Result<>(ResultEnum.SUCCESS.getCode(), msg);
+    public static <T> Result<T> successData(String msg, T data) {
+        Result<T> result = new Result<>();
         result.setData(data);
+        result.setMsg(msg);
+        result.setCode(ResultEnum.SUCCESS.getCode());
         return result;
     }
 
-    public static <T> Result<T> error() {
-        return error(ResultEnum.ERROR.getMessage());
+    /**
+     * 默认的错误信息
+     *
+     * @return Result
+     */
+    public static Result<Object> error() {
+        return error(ResultEnum.ERROR.getCode(), ResultEnum.ERROR.getMessage());
     }
 
-    public static <T> Result<T> error(String msg) {
+    public static Result<Object> error(String msg) {
         return error(ResultEnum.ERROR.getCode(), msg);
     }
 
-    public static <T> Result<T> error(ResultEnum resultEnum) {
-        return error(resultEnum.getCode(), resultEnum.getMessage());
-    }
-
-    public static <T> Result<T> error(int code, String msg) {
-        return new Result<>(code, msg);
-    }
-
-
-    public static <T> Result<T> errorData(T data) {
-        return errorData(ResultEnum.ERROR.getMessage(), data);
-    }
-
-    public static <T> Result<T> errorData(String msg, T data) {
-        Result<T> result = new Result<>(ResultEnum.ERROR.getCode(), msg);
-        result.setData(data);
+    public static Result<Object> error(int code, String msg) {
+        Result<Object> result = new Result<>();
+        result.setCode(code);
+        result.setMsg(msg);
         return result;
     }
 

@@ -6,7 +6,7 @@ import com.naidelii.security.util.SecurityUtils;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author yong
@@ -21,11 +21,8 @@ public class GlobalMetaObjectHandler implements MetaObjectHandler {
      */
     @Override
     public void insertFill(MetaObject metaObject) {
-        // 获取创建时间字段
-        Object createTime = getFieldValByName(DataConstants.CREATE_TIME, metaObject);
-        if (createTime == null) {
-            setFieldValByName(DataConstants.CREATE_TIME, new Date(), metaObject);
-        }
+        // 设置创建时间
+        this.strictInsertFill(metaObject, DataConstants.CREATE_TIME, LocalDateTime.class, LocalDateTime.now());
         // 获取创建人字段
         Object createBy = getFieldValByName(DataConstants.CREATE_BY, metaObject);
         if (createBy == null) {
@@ -39,11 +36,8 @@ public class GlobalMetaObjectHandler implements MetaObjectHandler {
      */
     @Override
     public void updateFill(MetaObject metaObject) {
-        // 获取更新时间字段
-        Object fieldValue = getFieldValByName(DataConstants.UPDATE_TIME, metaObject);
-        if (fieldValue == null) {
-            setFieldValByName(DataConstants.UPDATE_TIME, new Date(), metaObject);
-        }
+        // 设置更新时间
+        this.strictInsertFill(metaObject, DataConstants.UPDATE_TIME, LocalDateTime.class, LocalDateTime.now());
         // 获取更新人字段
         Object updateBy = getFieldValByName(DataConstants.UPDATE_BY, metaObject);
         if (updateBy == null) {

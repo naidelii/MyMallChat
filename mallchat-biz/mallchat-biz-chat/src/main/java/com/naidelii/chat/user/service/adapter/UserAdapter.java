@@ -37,7 +37,7 @@ public class UserAdapter {
         return user;
     }
 
-    public static SysUser buildUpdateUser(String userId) {
+    public static SysUser buildOnlineUser(String userId) {
         return SysUser.builder()
                 .id(userId)
                 .lastOptTime(new Date())

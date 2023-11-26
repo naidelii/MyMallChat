@@ -1,22 +1,21 @@
 package com.naidelii.security.config;
 
 import cn.dev33.satoken.context.SaHolder;
+import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.filter.SaServletFilter;
-import cn.dev33.satoken.interceptor.SaInterceptor;
 import cn.dev33.satoken.router.SaHttpMethod;
 import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 import cn.hutool.core.text.CharSequenceUtil;
+import com.naidelii.base.constant.enums.ResultEnum;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author naidelii
@@ -24,9 +23,10 @@ import java.util.List;
 @Configuration
 @Slf4j
 @RequiredArgsConstructor
-public class SaTokenConfigure implements WebMvcConfigurer {
+@EnableConfigurationProperties(SecurityProperties.class)
+public class SaTokenConfiguration implements WebMvcConfigurer {
 
-    private final SecurityConfigure securityConfigure;
+    private final SecurityProperties securityProperties;
 
 
     /**
@@ -36,10 +36,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // 注册路由拦截器，自定义验证规则
-        registry.addInterceptor(new SaInterceptor(handle -> StpUtil.checkLogin()))
-                .addPathPatterns("/**")
-                .excludePathPatterns(CharSequenceUtil.splitToArray(securityConfigure.getNotMatch(), ","));
+
     }
 
     /**
@@ -50,10 +47,27 @@ public class SaTokenConfigure implements WebMvcConfigurer {
     @Bean
     public SaServletFilter getSaServletFilter() {
         return new SaServletFilter()
-                // 指定拦截路由]
+                // 指定拦截路由
                 .addInclude("/**")
                 // 指定放行路由
-                .addExclude(CharSequenceUtil.splitToArray(securityConfigure.getExcludes(), ","))
+                .addExclude(CharSequenceUtil.splitToArray(securityProperties.getExcludes(), ","))
+                // 全局认证函数
+                .setAuth(obj -> {
+                    // 登录校验
+                    SaRouter.match("/**")
+                            .notMatch(CharSequenceUtil.splitToArray(securityProperties.getNotMatch(), ","))
+                            .check(r -> StpUtil.checkLogin());
+                })
+                // 异常处理函数
+                .setError(e -> {
+                    // 未登录
+                    if (e instanceof NotLoginException) {
+                        return SaResult.error(e.getMessage()).setCode(ResultEnum.UNAUTHORIZED.getCode());
+                    } else {
+                        // 没有权限
+                        return SaResult.error(e.getMessage()).setCode(ResultEnum.FORBIDDEN.getCode());
+                    }
+                })
                 // 前置函数：在每次认证函数之前执行
                 .setBeforeAuth(obj -> {
                     // ---------- 设置跨域响应头 ----------
@@ -73,20 +87,4 @@ public class SaTokenConfigure implements WebMvcConfigurer {
                 });
     }
 
-
-    /**
-     * 放行的静态资源
-     *
-     * @return List<String>
-     */
-    private List<String> excludeStaticResource() {
-        // 放行swagger
-        List<String> list = new ArrayList<>();
-        list.add("/favicon.ico");
-        list.add("/doc.html");
-        list.add("/webjars/**");
-        list.add("/swagger-resources/**");
-        list.add("/v2/api-docs");
-        return list;
-    }
 }

@@ -1,20 +1,14 @@
 package com.naidelii.security.config;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 /**
  * @author naidelii
  */
 @ConfigurationProperties(prefix = "security")
-@Getter
-@Setter
-@ToString
-@Component
-public class SecurityConfigure {
+@Data
+public class SecurityProperties {
 
     /**
      * 排除资源

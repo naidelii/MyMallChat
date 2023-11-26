@@ -1,15 +1,16 @@
 package com.naidelii.chat.wx.controller;
 
 import cn.hutool.json.JSONUtil;
-import com.naidelii.chat.wx.service.IWeChatService;
 import com.naidelii.base.constant.CommonConstants;
 import com.naidelii.base.exception.MallChatException;
+import com.naidelii.chat.wx.service.IWeChatService;
 import com.naidelii.wx.service.adapter.MessageTextBuilder;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
 import me.chanjar.weixin.common.bean.oauth2.WxOAuth2AccessToken;
-import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.service.WxOAuth2Service;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.view.RedirectView;
 /**
  * @author naidelii
  */
+@Api(tags = "公众号")
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -40,12 +42,12 @@ public class OfficialAccountController {
      * @param echostr   随机字符串
      * @return String
      */
+    @ApiOperation("验签")
     @GetMapping
     public String authGet(@RequestParam(name = "signature") String signature,
                           @RequestParam(name = "timestamp") String timestamp,
                           @RequestParam(name = "nonce") String nonce,
                           @RequestParam(name = "echostr") String echostr) {
-
         log.info("\n接收到来自微信服务器的认证消息：[{}, {}, {}, {}]", signature, timestamp, nonce, echostr);
         // 校验签名
         if (wxMpService.checkSignature(timestamp, nonce, signature)) {
@@ -59,10 +61,9 @@ public class OfficialAccountController {
      *
      * @param code 接口调用凭证
      * @return RedirectView
-     * @throws WxErrorException WxErrorException
      */
     @GetMapping("/callBack")
-    public RedirectView callBack(@RequestParam String code) throws WxErrorException {
+    public RedirectView callBack(@RequestParam String code) {
         log.info("\ncallBack code：{}", code);
         try {
             WxOAuth2Service oAuth2Service = wxMpService.getOAuth2Service();

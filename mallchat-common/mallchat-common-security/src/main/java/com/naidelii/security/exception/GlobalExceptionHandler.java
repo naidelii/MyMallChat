@@ -1,10 +1,7 @@
 package com.naidelii.security.exception;
 
-
-import cn.dev33.satoken.exception.NotLoginException;
 import cn.hutool.core.util.StrUtil;
 import com.naidelii.base.constant.CommonConstants;
-import com.naidelii.base.constant.enums.ResultEnum;
 import com.naidelii.base.domain.vo.response.Result;
 import com.naidelii.base.exception.MallChatException;
 import lombok.extern.slf4j.Slf4j;
@@ -50,18 +47,6 @@ public class GlobalExceptionHandler {
         return Result.error(String.format("不支持'%s'请求", e.getMethod()));
     }
 
-
-    /**
-     * 处理未登录
-     *
-     * @param e 异常对象
-     * @return 返回结果
-     */
-    @ExceptionHandler(NotLoginException.class)
-    public Result<Object> handleNotLoginException(Exception e) {
-        log.error("=========handleNotLoginException：{}", e.getMessage());
-        return Result.error(ResultEnum.UNAUTHORIZED);
-    }
 
     /**
      * 处理自定义异常

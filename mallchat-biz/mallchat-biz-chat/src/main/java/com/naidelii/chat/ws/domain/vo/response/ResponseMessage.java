@@ -8,6 +8,7 @@ import lombok.Data;
 @Data
 public class ResponseMessage<T> {
     /**
+     * 业务类型
      * @see com.naidelii.chat.ws.domain.enums.ResponseTypeEnum
      */
     private Integer type;

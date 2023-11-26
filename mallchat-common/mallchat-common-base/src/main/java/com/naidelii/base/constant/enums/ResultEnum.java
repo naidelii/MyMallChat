@@ -1,5 +1,6 @@
 package com.naidelii.base.constant.enums;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
@@ -7,6 +8,7 @@ import lombok.Getter;
  */
 
 @Getter
+@AllArgsConstructor
 public enum ResultEnum {
     /**
      * 操作成功
@@ -28,23 +30,11 @@ public enum ResultEnum {
     /**
      * 响应code
      */
-    Integer code;
+    private final Integer code;
 
     /**
      * 响应消息
      */
-    String message;
+    private final String message;
 
-    ResultEnum(Integer code, String message) {
-        this.message = message;
-        this.code = code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 }

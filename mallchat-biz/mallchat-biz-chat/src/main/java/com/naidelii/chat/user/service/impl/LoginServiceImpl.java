@@ -22,12 +22,13 @@ public class LoginServiceImpl implements ILoginService {
 
     @Override
     public String scanQRCodeLogin(String userId) {
-        // 更新用户信息
-        SysUser updateUser = UserAdapter.buildUpdateUser(userId);
-        userService.updateById(updateUser);
+        // 用户信息
+        SysUser onlineUser = UserAdapter.buildOnlineUser(userId);
         // 执行登录逻辑
-        LoginUser loginUser = UserAdapter.buildLoginUser(updateUser);
+        LoginUser loginUser = UserAdapter.buildLoginUser(onlineUser);
         SecurityUtils.setLoginUser(userId, loginUser);
+        // 更新用户信息
+        userService.updateById(onlineUser);
         // 返回token
         return StpUtil.getTokenValue();
     }
