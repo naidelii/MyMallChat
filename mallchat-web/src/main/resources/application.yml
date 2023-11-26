@@ -101,4 +101,11 @@ security:
   # 静态资源排除
   excludes: /favicon.ico,/doc.html,/webjars/**,/swagger-resources/**,/v3/**,/v3/api-docs/**,/profile/**
   # 接口放行
-  notMatch: /chat/officialAccount
+  notMatch: /chat/officialAccount/**
+
+# jwt配置
+jwt:
+  # 秘钥
+  secret: sdaaw231sd
+  # 过期时间（单位s）
+  expireTime: 30

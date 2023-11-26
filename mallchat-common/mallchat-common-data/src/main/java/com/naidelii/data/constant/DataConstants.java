@@ -50,4 +50,9 @@ public interface DataConstants {
      * 日期格式化
      */
     String FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+    /**
+     * 自定义的RedisTemplate名字
+     */
+    String REDIS_TEMPLATE_NAME = "objectRedisTemplate";
 }

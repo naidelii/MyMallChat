@@ -51,4 +51,9 @@ public interface CommonConstants {
      * 默认的操作人
      */
     String DEFAULT_OPERATOR = "system";
+
+    /**
+     * null
+     */
+    String NULL_STR = "null";
 }
