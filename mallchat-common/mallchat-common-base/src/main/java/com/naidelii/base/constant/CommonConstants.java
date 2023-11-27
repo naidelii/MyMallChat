@@ -56,4 +56,15 @@ public interface CommonConstants {
      * null
      */
     String NULL_STR = "null";
+
+    /**
+     * 项目共用线程池
+     */
+    String MALL_CHAT_EXECUTOR = "mallChatExecutor";
+
+    /**
+     * 项目共用线程池前缀
+     */
+    String MALL_CHAT_EXECUTOR_PREFIX = "mallChat-executor-";
+
 }
