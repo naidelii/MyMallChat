@@ -52,4 +52,10 @@ public class MessageAdapter {
         result.setType(ResponseTypeEnum.LOGIN_SCAN_SUCCESS.getType());
         return result;
     }
+
+    public static ResponseMessage<?> buildInvalidToken() {
+        ResponseMessage<Object> result = new ResponseMessage<>();
+        result.setType(ResponseTypeEnum.INVALID_TOKEN.getType());
+        return result;
+    }
 }

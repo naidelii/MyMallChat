@@ -1,11 +1,12 @@
 package com.naidelii.chat.ws.service.handler;
 
 import cn.hutool.extra.spring.SpringUtil;
+import com.naidelii.base.exception.MallChatException;
 import com.naidelii.chat.ws.domain.vo.request.RequestMessage;
 import com.naidelii.chat.ws.service.IWebSocketService;
 import com.naidelii.chat.ws.service.RequestMessageStrategyHandler;
 import com.naidelii.chat.ws.service.adapter.MessageAdapter;
-import com.naidelii.base.exception.MallChatException;
+import com.naidelii.websocket.util.NettyUtils;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -15,6 +16,7 @@ import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author naidelii
@@ -71,6 +73,14 @@ public class WebSocketServerListenerHandler extends SimpleChannelInboundHandler<
     @Override
     public void userEventTriggered(ChannelHandlerContext context, Object event) {
         if (event instanceof WebSocketServerProtocolHandler.HandshakeComplete) {
+            Channel channel = context.channel();
+            // 获取token
+            String token = NettyUtils.getAttr(channel, NettyUtils.TOKEN);
+            // 如果token存在的话，则进行认证
+            if (StringUtils.isNotEmpty(token)) {
+                // 完成认证
+                webSocketService.authentication(token, channel);
+            }
             log.info("握手完成");
         } else if (event instanceof IdleStateEvent) {
             IdleStateEvent idleStateEvent = (IdleStateEvent) event;

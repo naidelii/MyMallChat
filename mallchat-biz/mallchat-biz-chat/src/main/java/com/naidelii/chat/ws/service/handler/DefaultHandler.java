@@ -7,9 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author naidelii
+ * 默认处理器（处理不能识别的消息）
  */
 @Slf4j
-public class UnknownTypeHandler implements RequestMessageStrategyHandler {
+public class DefaultHandler implements RequestMessageStrategyHandler {
     @Override
     public RequestTypeEnum type() {
         return RequestTypeEnum.UNKNOWN;

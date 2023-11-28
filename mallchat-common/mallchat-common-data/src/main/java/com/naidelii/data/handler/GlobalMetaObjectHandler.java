@@ -2,7 +2,6 @@ package com.naidelii.data.handler;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.naidelii.data.constant.DataConstants;
-import com.naidelii.security.util.SecurityUtils;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
@@ -27,7 +26,7 @@ public class GlobalMetaObjectHandler implements MetaObjectHandler {
         Object createBy = getFieldValByName(DataConstants.CREATE_BY, metaObject);
         if (createBy == null) {
             // 获取当前登录的用户名
-            setFieldValByName(DataConstants.CREATE_BY, SecurityUtils.getUserName(), metaObject);
+//            setFieldValByName(DataConstants.CREATE_BY, SecurityUtils.getUserName(), metaObject);
         }
     }
 
@@ -42,7 +41,7 @@ public class GlobalMetaObjectHandler implements MetaObjectHandler {
         Object updateBy = getFieldValByName(DataConstants.UPDATE_BY, metaObject);
         if (updateBy == null) {
             // 获取当前登录的用户名
-            setFieldValByName(DataConstants.UPDATE_BY, SecurityUtils.getUserName(), metaObject);
+//            setFieldValByName(DataConstants.UPDATE_BY, SecurityUtils.getUserName(), metaObject);
         }
     }
 

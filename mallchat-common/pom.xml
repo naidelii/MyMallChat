@@ -15,6 +15,7 @@
         <module>mallchat-common-data</module>
         <module>mallchat-common-swagger</module>
         <module>mallchat-common-security</module>
+        <module>mallchat-common-security-sa</module>
     </modules>
 
 </project>

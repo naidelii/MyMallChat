@@ -68,4 +68,11 @@ public interface IWebSocketService {
      * @param code 登陆码
      */
     void waitAuthorize(String code);
+
+    /**
+     * 身份认证
+     * @param token token
+     * @param channel channel
+     */
+    void authentication(String token, Channel channel);
 }

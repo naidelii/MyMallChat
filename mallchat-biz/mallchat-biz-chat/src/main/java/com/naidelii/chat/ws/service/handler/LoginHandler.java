@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author naidelii
- * 处理身份验证逻辑的 WebSocket 请求处理策略实现类
+ * 登录处理器
  */
 @Component
 @Slf4j

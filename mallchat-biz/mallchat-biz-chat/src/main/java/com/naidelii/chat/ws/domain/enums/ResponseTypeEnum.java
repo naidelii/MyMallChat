@@ -25,7 +25,12 @@ public enum ResponseTypeEnum {
     /**
      * 用户登录成功，返回用户信息
      */
-    LOGIN_SUCCESS(3, LoginSuccess.class);
+    LOGIN_SUCCESS(3, LoginSuccess.class),
+
+    /**
+     * token失效
+     */
+    INVALID_TOKEN(4, null);
 
     private final Integer type;
     private final Class<?> dataClass;

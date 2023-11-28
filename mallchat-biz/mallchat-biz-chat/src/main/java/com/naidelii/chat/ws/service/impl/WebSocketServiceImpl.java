@@ -4,6 +4,7 @@ import cn.hutool.core.lang.UUID;
 import cn.hutool.json.JSONUtil;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
+import com.naidelii.base.exception.MallChatException;
 import com.naidelii.chat.user.domain.entity.SysUser;
 import com.naidelii.chat.user.service.ILoginService;
 import com.naidelii.chat.user.service.ISysUserService;
@@ -12,11 +13,12 @@ import com.naidelii.chat.ws.domain.vo.response.LoginSuccess;
 import com.naidelii.chat.ws.domain.vo.response.ResponseMessage;
 import com.naidelii.chat.ws.service.IWebSocketService;
 import com.naidelii.chat.ws.service.adapter.MessageAdapter;
-import com.naidelii.base.exception.MallChatException;
+import com.naidelii.security.util.JwtUtils;
 import io.netty.channel.Channel;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -114,10 +116,7 @@ public class WebSocketServiceImpl implements IWebSocketService {
         SysUser user = userService.getById(userId);
         // 调用登录模块，获取token
         String token = loginService.scanQRCodeLogin(userId);
-        // 将登陆成功的结果返回给前端
-        ResponseMessage<LoginSuccess> message = MessageAdapter.buildLoginSuccessResp(user, token);
-        // 发送消息
-        sendMessage(channel, message);
+        loginSuccess(channel, user, token);
     }
 
     @Override
@@ -133,8 +132,41 @@ public class WebSocketServiceImpl implements IWebSocketService {
             log.error("=========waitAuthorize，{}对应channel不存在", code);
             return;
         }
-        // 通知前端，现在正在等待用户执行授权
+        // 通知客户端，现在正在等待用户执行授权
         ResponseMessage<?> message = MessageAdapter.buildWaitAuthorize();
+        // 发送消息
+        sendMessage(channel, message);
+    }
+
+    @Override
+    public void authentication(String token, Channel channel) {
+        // 解析token
+        String userId = JwtUtils.getUserInfo(token);
+        if (StringUtils.isEmpty(userId)) {
+            // 通知客户端，token失效
+            ResponseMessage<?> message = MessageAdapter.buildInvalidToken();
+            // 发送消息
+            sendMessage(channel, message);
+        } else {
+            // 查询用户信息
+            SysUser user = userService.getById(userId);
+            loginSuccess(channel, user, token);
+        }
+    }
+
+    /**
+     * 登录成功
+     *
+     * @param channel channel
+     * @param user    用户信息
+     * @param token   token
+     */
+    public void loginSuccess(Channel channel, SysUser user, String token) {
+        // 维护channel与用户的关系
+        WebSocketChannelExtraDto dto = ONLINE_USER_MAP.get(channel);
+        dto.setUid(user.getId());
+        // 将登陆成功的结果返回给通知客户端
+        ResponseMessage<LoginSuccess> message = MessageAdapter.buildLoginSuccessResp(user, token);
         // 发送消息
         sendMessage(channel, message);
     }

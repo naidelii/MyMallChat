@@ -33,6 +33,7 @@ public class OfficialAccountController {
     private final IWeChatService weChatService;
     private final WxMpMessageRouter messageRouter;
 
+
     /**
      * 验签
      *
@@ -43,7 +44,7 @@ public class OfficialAccountController {
      * @return String
      */
     @ApiOperation("验签")
-    @GetMapping
+    @GetMapping(produces = "text/plain;charset=UTF-8")
     public String authGet(@RequestParam(name = "signature") String signature,
                           @RequestParam(name = "timestamp") String timestamp,
                           @RequestParam(name = "nonce") String nonce,
