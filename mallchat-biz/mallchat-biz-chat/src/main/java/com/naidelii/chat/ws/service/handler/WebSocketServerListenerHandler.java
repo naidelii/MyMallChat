@@ -1,16 +1,17 @@
 package com.naidelii.chat.ws.service.handler;
 
 import cn.hutool.extra.spring.SpringUtil;
+import com.naidelii.base.constant.CommonConstants;
 import com.naidelii.base.exception.MallChatException;
 import com.naidelii.chat.ws.domain.vo.request.RequestMessage;
 import com.naidelii.chat.ws.service.IWebSocketService;
 import com.naidelii.chat.ws.service.RequestMessageStrategyHandler;
 import com.naidelii.chat.ws.service.adapter.MessageAdapter;
-import com.naidelii.websocket.util.NettyUtils;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.timeout.IdleState;
@@ -74,8 +75,12 @@ public class WebSocketServerListenerHandler extends SimpleChannelInboundHandler<
     public void userEventTriggered(ChannelHandlerContext context, Object event) {
         if (event instanceof WebSocketServerProtocolHandler.HandshakeComplete) {
             Channel channel = context.channel();
+            // 强转
+            WebSocketServerProtocolHandler.HandshakeComplete handshakeData = (WebSocketServerProtocolHandler.HandshakeComplete) event;
+            // 获取请求头中的token
+            HttpHeaders headers = handshakeData.requestHeaders();
             // 获取token
-            String token = NettyUtils.getAttr(channel, NettyUtils.TOKEN);
+            String token = headers.get(CommonConstants.AUTHORIZATION);
             // 如果token存在的话，则进行认证
             if (StringUtils.isNotEmpty(token)) {
                 // 完成认证

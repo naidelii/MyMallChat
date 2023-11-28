@@ -19,6 +19,7 @@ public class PortalHandshakeInterceptor extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        // 如果是http请求则进行处理
         if (msg instanceof HttpRequest) {
             HttpRequest request = (HttpRequest) msg;
             // 获取请求头
