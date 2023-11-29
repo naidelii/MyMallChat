@@ -1,6 +1,7 @@
 package com.naidelii.security.interceptor;
 
 import com.naidelii.base.constant.CommonConstants;
+import com.naidelii.base.constant.enums.ResultCodeEnum;
 import com.naidelii.security.util.JwtUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -16,18 +17,12 @@ public class TokenInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // 获取请求中的token
         String token = request.getHeader(CommonConstants.AUTHORIZATION);
-        if (StringUtils.isEmpty(token)) {
-            return false;
+        if (StringUtils.isNotEmpty(token) && JwtUtils.verify(token)) {
+            // 通过验证
+            return true;
         }
-        // 校验token是否有效
-        boolean verify = JwtUtils.verify(token);
-        if (!verify) {
-            // 无效，返回401
-            response.setContentType("application/json");
-            response.setStatus(401);
-            return false;
-        }
-        // 通过验证
-        return true;
+        // 无效，返回401
+        ResultCodeEnum.UNAUTHORIZED.sendHttpError(response);
+        return false;
     }
 }

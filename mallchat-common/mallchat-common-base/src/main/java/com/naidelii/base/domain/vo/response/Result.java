@@ -60,11 +60,10 @@ public class Result<T> implements Serializable {
     }
 
     /**
-     * 默认的错误信息
+     * 默认的错误消息
      *
      * @return Result
      */
-
     public static <T> Result<T> failed() {
         return new Result<>(ResultCodeEnum.FAIL.getCode(), ResultCodeEnum.FAIL.getMessage(), null);
     }
@@ -75,5 +74,14 @@ public class Result<T> implements Serializable {
 
     public static <T> Result<T> failed(Integer code, String msg) {
         return new Result<>(code, msg, null);
+    }
+
+    /**
+     * 默认的身份认证失败消息
+     *
+     * @return Result
+     */
+    public static <T> Result<T> unauthorized() {
+        return new Result<>(ResultCodeEnum.UNAUTHORIZED.getCode(), ResultCodeEnum.UNAUTHORIZED.getMessage(), null);
     }
 }

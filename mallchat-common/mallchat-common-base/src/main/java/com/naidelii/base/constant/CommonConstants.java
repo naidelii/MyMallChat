@@ -67,4 +67,9 @@ public interface CommonConstants {
      */
     String MALL_CHAT_EXECUTOR_PREFIX = "mallChat-executor-";
 
+    /**
+     * JSON
+     */
+    String JSON_UTF8_CONTENT_TYPE = "application/json; charset=utf-8";
+
 }
