@@ -3,12 +3,13 @@ package com.naidelii.security.config;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.filter.SaServletFilter;
+import cn.dev33.satoken.interceptor.SaInterceptor;
 import cn.dev33.satoken.router.SaHttpMethod;
 import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 import cn.hutool.core.text.CharSequenceUtil;
-import com.naidelii.base.constant.enums.ResultEnum;
+import com.naidelii.base.constant.enums.ResultCodeEnum;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -36,7 +37,9 @@ public class SaTokenConfiguration implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-
+        // 注册 Sa-Token 拦截器，校验规则为 StpUtil.checkLogin() 登录校验。
+        registry.addInterceptor(new SaInterceptor(handle -> StpUtil.checkLogin()))
+                .addPathPatterns("/**");
     }
 
     /**
@@ -62,10 +65,10 @@ public class SaTokenConfiguration implements WebMvcConfigurer {
                 .setError(e -> {
                     // 未登录
                     if (e instanceof NotLoginException) {
-                        return SaResult.error(e.getMessage()).setCode(ResultEnum.UNAUTHORIZED.getCode());
+                        return SaResult.error(e.getMessage()).setCode(ResultCodeEnum.UNAUTHORIZED.getCode());
                     } else {
                         // 没有权限
-                        return SaResult.error(e.getMessage()).setCode(ResultEnum.FORBIDDEN.getCode());
+                        return SaResult.error(e.getMessage()).setCode(ResultCodeEnum.FORBIDDEN.getCode());
                     }
                 })
                 // 前置函数：在每次认证函数之前执行

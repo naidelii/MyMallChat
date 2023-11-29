@@ -1,0 +1,34 @@
+mallchat:
+  mysql:
+    ip: 10.8.8.252
+    port: 3306
+    db: mall_chat
+    username: root
+    password: Mh.123456
+  redis:
+    host: 10.8.8.252
+    port: 6379
+    password: ManHui20!&
+
+# 微信公众号配置
+wx:
+  mp:
+    # 内网穿透域名
+    domain: https://788sl31695.yicp.fun
+    callback: /chat/officialAccount/callBack
+    # 过期时间10分钟
+    codeExpirationTime: 6000
+    config:
+      appId: wxeb111b0b780f28f9
+      secret: daeba080db010d6c912a467cda175704
+      # 接口配置的token值
+      token: naidelii
+      # 接口配置里的EncodingAESKey值，测试号不用（线上的服务需要配置）
+      aesKey:
+
+# netty配置
+netty:
+  port: 8090
+  bossExecutor: 1
+  workerExecutor: 4
+  timeout: 30000

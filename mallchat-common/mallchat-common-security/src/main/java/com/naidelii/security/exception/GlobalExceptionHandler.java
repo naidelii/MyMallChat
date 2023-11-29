@@ -32,7 +32,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public Result<Object> handleException(Exception e) {
         log.error("system exception！The reason is：{}", e.getMessage(), e);
-        return Result.error();
+        return Result.failed();
     }
 
     /**
@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public Result<Object> handleException(HttpRequestMethodNotSupportedException e) {
         log.error(e.getMessage(), e);
-        return Result.error(String.format("不支持'%s'请求", e.getMethod()));
+        return Result.failed(String.format("不支持'%s'请求", e.getMethod()));
     }
 
 
@@ -57,7 +57,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MallChatException.class)
     public Result<?> handlerMallChatException(MallChatException e) {
         log.error("MallChat exception！The reason is：{}", e.getMessage(), e);
-        return Result.error(e.getMessage());
+        return Result.failed(e.getMessage());
     }
 
     /**
@@ -73,7 +73,7 @@ public class GlobalExceptionHandler {
         ObjectError objectError = allErrors.get(0);
         String defaultMessage = objectError.getDefaultMessage();
         String errorMsg = StrUtil.isNotBlank(defaultMessage) ? defaultMessage : CommonConstants.PARAM_VERIFY_ERROR_STR;
-        return Result.error(errorMsg);
+        return Result.failed(errorMsg);
     }
 
     /**
@@ -89,7 +89,7 @@ public class GlobalExceptionHandler {
         ObjectError objectError = allErrors.get(0);
         String defaultMessage = objectError.getDefaultMessage();
         String errorMsg = StrUtil.isNotBlank(defaultMessage) ? defaultMessage : CommonConstants.PARAM_VERIFY_ERROR_STR;
-        return Result.error(errorMsg);
+        return Result.failed(errorMsg);
     }
 
 }

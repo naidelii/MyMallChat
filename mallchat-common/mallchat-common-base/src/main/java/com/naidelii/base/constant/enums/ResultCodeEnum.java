@@ -9,7 +9,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum ResultEnum {
+public enum ResultCodeEnum {
     /**
      * 操作成功
      */
@@ -17,7 +17,7 @@ public enum ResultEnum {
     /**
      * 操作失败
      */
-    ERROR(500, "操作失败"),
+    FAIL(500, "操作失败"),
     /**
      * 未登录
      */
