@@ -1,6 +1,5 @@
 package com.naidelii.chat.user.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.naidelii.chat.user.domain.entity.SysUser;
 import com.naidelii.chat.user.domain.vo.request.ModifyNameRequest;
 import com.naidelii.chat.user.domain.vo.response.UserInfoResponse;
@@ -8,7 +7,7 @@ import com.naidelii.chat.user.domain.vo.response.UserInfoResponse;
 /**
  * @author naidelii
  */
-public interface ISysUserService extends IService<SysUser> {
+public interface ISysUserService {
 
     /**
      * 根据openId查询用户
