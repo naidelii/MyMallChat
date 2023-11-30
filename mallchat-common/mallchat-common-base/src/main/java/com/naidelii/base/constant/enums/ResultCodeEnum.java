@@ -56,7 +56,7 @@ public enum ResultCodeEnum {
         PrintWriter out;
         try {
             out = response.getWriter();
-            Result<Object> result = Result.failed(code, message);
+            Result<Object> result = Result.fail(code, message);
             out.write(JSONUtil.toJsonStr(result));
         } catch (Exception e) {
             log.error(e.getMessage(), e);

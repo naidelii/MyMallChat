@@ -19,6 +19,6 @@ public class SysUserTest {
         sysUser.setNickname("管理员");
         sysUser.setSex(1);
         sysUser.setLastOptTime(new Date());
-        userService.save(sysUser);
+//        userService.save(sysUser);
     }
 }

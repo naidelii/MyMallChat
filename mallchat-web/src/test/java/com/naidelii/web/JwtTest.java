@@ -12,7 +12,7 @@ public class JwtTest {
 
     @Test
     public void createToken() {
-        String token = JwtUtils.createToken("1728082033554530306");
+        String token = JwtUtils.createToken("123");
         System.out.println(token);
     }
 

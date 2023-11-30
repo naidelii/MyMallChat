@@ -1,7 +1,9 @@
 package com.naidelii.chat.user.service.adapter;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.naidelii.chat.user.domain.entity.SysUser;
 import com.naidelii.base.constant.CommonConstants;
+import com.naidelii.chat.user.domain.vo.response.UserInfoResponse;
 import com.naidelii.security.entity.LoginUser;
 import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
 
@@ -51,5 +53,12 @@ public class UserAdapter {
                 .nickname(updateUser.getNickname())
                 .avatar(updateUser.getAvatar())
                 .build();
+    }
+
+    public static UserInfoResponse buildUserInfo(SysUser sysUser, Integer count) {
+        UserInfoResponse vo = new UserInfoResponse();
+        BeanUtil.copyProperties(sysUser, vo);
+        vo.setRenameCount(count);
+        return vo;
     }
 }

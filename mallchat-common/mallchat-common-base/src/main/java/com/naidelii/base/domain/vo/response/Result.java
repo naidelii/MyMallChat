@@ -64,15 +64,15 @@ public class Result<T> implements Serializable {
      *
      * @return Result
      */
-    public static <T> Result<T> failed() {
+    public static <T> Result<T> fail() {
         return new Result<>(ResultCodeEnum.FAIL.getCode(), ResultCodeEnum.FAIL.getMessage(), null);
     }
 
-    public static <T> Result<T> failed(String msg) {
+    public static <T> Result<T> fail(String msg) {
         return new Result<>(ResultCodeEnum.FAIL.getCode(), msg, null);
     }
 
-    public static <T> Result<T> failed(Integer code, String msg) {
+    public static <T> Result<T> fail(Integer code, String msg) {
         return new Result<>(code, msg, null);
     }
 
