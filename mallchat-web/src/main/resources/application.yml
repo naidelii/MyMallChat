@@ -16,7 +16,7 @@ server:
 spring:
   profiles:
     # 环境 dev|test|prod
-    active: test
+    active: dev
   application:
     name: mallchat
   # 数据源配置
@@ -109,4 +109,4 @@ jwt:
   # 秘钥
   secret: sdaaw231sd
   # 过期时间（单位s）
-  expireTime: 30
+  expireTime: 1800

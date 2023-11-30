@@ -2,6 +2,7 @@ package com.naidelii.security.config;
 
 import cn.hutool.core.text.CharSequenceUtil;
 import com.naidelii.security.interceptor.TokenInterceptor;
+import com.naidelii.security.interceptor.UserInfoInterceptor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -27,8 +28,11 @@ public class WebConfiguration implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // 注册 Sa-Token 拦截器，校验规则为 StpUtil.checkLogin() 登录校验。
         registry.addInterceptor(new TokenInterceptor())
+                .addPathPatterns("/**")
+                .excludePathPatterns(CharSequenceUtil.splitToArray(securityProperties.getExcludes(), ","))
+                .excludePathPatterns(CharSequenceUtil.splitToArray(securityProperties.getNotMatch(), ","));
+        registry.addInterceptor(new UserInfoInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns(CharSequenceUtil.splitToArray(securityProperties.getExcludes(), ","))
                 .excludePathPatterns(CharSequenceUtil.splitToArray(securityProperties.getNotMatch(), ","));

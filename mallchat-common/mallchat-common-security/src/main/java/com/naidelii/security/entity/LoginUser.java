@@ -34,5 +34,9 @@ public class LoginUser {
      */
     private Integer sex;
 
+    /**
+     * 客户端的ip
+     */
+    private String clientIp;
 
 }

@@ -46,7 +46,7 @@ public enum ResultCodeEnum {
     private final String message;
 
     /**
-     * 错误相应
+     * 错误响应
      *
      * @param response HttpServletResponse
      */

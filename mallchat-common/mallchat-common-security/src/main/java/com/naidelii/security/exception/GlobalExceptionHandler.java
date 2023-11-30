@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.naidelii.base.constant.CommonConstants;
 import com.naidelii.base.domain.vo.response.Result;
 import com.naidelii.base.exception.MallChatException;
+import com.naidelii.base.exception.NotLoginException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
 import org.springframework.validation.ObjectError;
@@ -58,6 +59,18 @@ public class GlobalExceptionHandler {
     public Result<?> handlerMallChatException(MallChatException e) {
         log.error("MallChat exception！The reason is：{}", e.getMessage(), e);
         return Result.failed(e.getMessage());
+    }
+
+    /**
+     * 处理自定义异常
+     *
+     * @param e 自定义异常
+     * @return Result
+     */
+    @ExceptionHandler(NotLoginException.class)
+    public Result<?> handlerNotLoginException(NotLoginException e) {
+        log.error("MallChat exception！The reason is：{}", e.getMessage(), e);
+        return Result.unauthorized();
     }
 
     /**
