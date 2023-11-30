@@ -39,11 +39,17 @@ public class SysUserController {
         return Result.success(userInfo);
     }
 
-    @PutMapping("/updateUserInfo")
-    @ApiOperation("更新用户个人信息")
-    public Result<Void> updateUserInfo(@Validated @RequestBody ModifyNameRequest data) {
+    /**
+     * 修改昵称
+     *
+     * @param data 实体类
+     * @return Result
+     */
+    @PutMapping("/changeNickname")
+    @ApiOperation("修改昵称")
+    public Result<Void> changeNickname(@Validated @RequestBody ModifyNameRequest data) {
         LoginUser loginUser = SecurityUtils.getLoginUser();
-        userService.updateUserInfo(loginUser.getId(), data);
+        userService.changeNickname(loginUser.getId(), data);
         return Result.success();
     }
 

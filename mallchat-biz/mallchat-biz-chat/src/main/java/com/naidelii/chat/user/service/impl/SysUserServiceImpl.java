@@ -50,7 +50,7 @@ public class SysUserServiceImpl implements ISysUserService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateUserInfo(String userId, ModifyNameRequest updateData) {
+    public void changeNickname(String userId, ModifyNameRequest updateData) {
         // 昵称
         String nickname = updateData.getNickname();
         // 根据昵称查询用户是否已经存在

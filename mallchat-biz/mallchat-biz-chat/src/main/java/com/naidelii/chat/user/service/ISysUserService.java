@@ -34,10 +34,10 @@ public interface ISysUserService {
 
 
     /**
-     * 更新用户信息
+     * 修改昵称
      *
      * @param userId     用户id
      * @param updateData 更新的信息
      */
-    void updateUserInfo(String userId, ModifyNameRequest updateData);
+    void changeNickname(String userId, ModifyNameRequest updateData);
 }
