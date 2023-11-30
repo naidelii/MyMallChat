@@ -2,6 +2,7 @@ package com.naidelii.chat.user.controller;
 
 import com.naidelii.base.domain.vo.response.Result;
 import com.naidelii.chat.user.domain.vo.request.ModifyNameRequest;
+import com.naidelii.chat.user.domain.vo.response.BadgeResponse;
 import com.naidelii.chat.user.domain.vo.response.UserInfoResponse;
 import com.naidelii.chat.user.service.ISysUserService;
 import com.naidelii.security.entity.LoginUser;
@@ -12,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -51,6 +54,14 @@ public class SysUserController {
         LoginUser loginUser = SecurityUtils.getLoginUser();
         userService.changeNickname(loginUser.getId(), data);
         return Result.success();
+    }
+
+    @GetMapping("/badgeList")
+    @ApiOperation("可选徽章预览")
+    public Result<List<BadgeResponse>> badgeList() {
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        List<BadgeResponse> list = userService.badgeList(loginUser.getId());
+        return Result.success(list);
     }
 
 }

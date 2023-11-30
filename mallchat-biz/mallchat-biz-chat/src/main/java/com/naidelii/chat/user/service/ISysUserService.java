@@ -2,7 +2,10 @@ package com.naidelii.chat.user.service;
 
 import com.naidelii.chat.user.domain.entity.SysUser;
 import com.naidelii.chat.user.domain.vo.request.ModifyNameRequest;
+import com.naidelii.chat.user.domain.vo.response.BadgeResponse;
 import com.naidelii.chat.user.domain.vo.response.UserInfoResponse;
+
+import java.util.List;
 
 /**
  * @author naidelii
@@ -40,4 +43,12 @@ public interface ISysUserService {
      * @param updateData 更新的信息
      */
     void changeNickname(String userId, ModifyNameRequest updateData);
+
+    /**
+     * 用户徽章列表
+     *
+     * @param userId 用户id
+     * @return 徽章列表
+     */
+    List<BadgeResponse> badgeList(String userId);
 }

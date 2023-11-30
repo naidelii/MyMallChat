@@ -31,7 +31,7 @@ public class Goods extends BaseEntity {
     /**
      * 物品功能描述
      */
-    private String describe;
+    private String description;
     /**
      * 物品图片
      */

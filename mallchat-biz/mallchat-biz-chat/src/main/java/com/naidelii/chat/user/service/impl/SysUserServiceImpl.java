@@ -3,18 +3,26 @@ package com.naidelii.chat.user.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.naidelii.base.exception.MallChatException;
+import com.naidelii.chat.user.dao.GoodsDao;
 import com.naidelii.chat.user.dao.SysUserDao;
 import com.naidelii.chat.user.dao.UserBackpackDao;
+import com.naidelii.chat.user.domain.entity.Goods;
 import com.naidelii.chat.user.domain.entity.SysUser;
 import com.naidelii.chat.user.domain.entity.UserBackpack;
 import com.naidelii.chat.user.domain.enums.ItemEnum;
+import com.naidelii.chat.user.domain.enums.ItemTypeEnum;
 import com.naidelii.chat.user.domain.vo.request.ModifyNameRequest;
+import com.naidelii.chat.user.domain.vo.response.BadgeResponse;
 import com.naidelii.chat.user.domain.vo.response.UserInfoResponse;
 import com.naidelii.chat.user.service.ISysUserService;
 import com.naidelii.chat.user.service.adapter.UserAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author naidelii
@@ -25,6 +33,7 @@ public class SysUserServiceImpl implements ISysUserService {
 
     private final SysUserDao userDao;
     private final UserBackpackDao backpackDao;
+    private final GoodsDao goodsDao;
 
     @Override
     public SysUser getByOpenId(String openId) {
@@ -69,6 +78,22 @@ public class SysUserServiceImpl implements ISysUserService {
             // 改名
             userDao.modifyName(userId, nickname);
         }
+    }
+
+    @Override
+    public List<BadgeResponse> badgeList(String userId) {
+        // 1.查询出所有的徽章
+        List<Goods> goodsList = goodsDao.getByType(ItemTypeEnum.BADGE.getType());
+        // 2.查询我所拥有的徽章（背包）
+        Set<String> goodsIds = goodsList
+                .stream()
+                .map(Goods::getId)
+                .collect(Collectors.toSet());
+        List<UserBackpack> backpackList = backpackDao.getByGoodsIds(goodsIds, userId);
+        // 3.查询我所佩戴的徽章信息
+        SysUser user = userDao.getById(userId);
+        String itemId = user.getItemId();
+        return UserAdapter.buildBadgeResponse(goodsList, backpackList, itemId);
     }
 
 

@@ -6,6 +6,9 @@ import com.naidelii.chat.user.domain.entity.UserBackpack;
 import com.naidelii.chat.user.mapper.UserBackpackMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Set;
+
 /**
  * @author naidelii
  */
@@ -35,5 +38,12 @@ public class UserBackpackDao extends ServiceImpl<UserBackpackMapper, UserBackpac
         userBackpack.setId(itemId);
         userBackpack.setStatus(YesOrNoEnum.YES.getStatus());
         return updateById(userBackpack);
+    }
+
+    public List<UserBackpack> getByGoodsIds(Set<String> goodsIds, String userId) {
+        return lambdaQuery()
+                .eq(UserBackpack::getUserId, userId)
+                .in(UserBackpack::getGoodsId, goodsIds)
+                .list();
     }
 }
