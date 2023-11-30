@@ -5,9 +5,9 @@ import cn.hutool.json.JSONUtil;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.naidelii.base.exception.MallChatException;
+import com.naidelii.chat.user.dao.SysUserDao;
 import com.naidelii.chat.user.domain.entity.SysUser;
 import com.naidelii.chat.user.service.ILoginService;
-import com.naidelii.chat.user.service.ISysUserService;
 import com.naidelii.chat.ws.domain.dto.WebSocketChannelExtraDto;
 import com.naidelii.chat.ws.domain.vo.response.LoginSuccess;
 import com.naidelii.chat.ws.domain.vo.response.ResponseMessage;
@@ -33,7 +33,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @RequiredArgsConstructor
 public class WebSocketServiceImpl implements IWebSocketService {
 
-    private final ISysUserService userService;
+    private final SysUserDao userDao;
     private final ILoginService loginService;
 
     /**
@@ -113,7 +113,7 @@ public class WebSocketServiceImpl implements IWebSocketService {
         // 移除登陆码
         WAIT_LOGIN_MAP.invalidate(code);
         // 获取最新的用户信息
-        SysUser user = userService.getById(userId);
+        SysUser user = userDao.getById(userId);
         // 调用登录模块，获取token
         String token = loginService.scanQRCodeLogin(userId);
         loginSuccess(channel, user, token);
@@ -149,7 +149,7 @@ public class WebSocketServiceImpl implements IWebSocketService {
             sendMessage(channel, message);
         } else {
             // 查询用户信息
-            SysUser user = userService.getById(userId);
+            SysUser user = userDao.getById(userId);
             loginSuccess(channel, user, token);
         }
     }
