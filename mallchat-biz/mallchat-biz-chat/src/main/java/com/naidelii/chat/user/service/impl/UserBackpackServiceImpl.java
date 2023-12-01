@@ -1,14 +1,12 @@
 package com.naidelii.chat.user.service.impl;
 
-import com.naidelii.base.exception.MallChatException;
 import com.naidelii.chat.user.dao.UserBackpackDao;
 import com.naidelii.chat.user.domain.entity.UserBackpack;
 import com.naidelii.chat.user.service.IUserBackpackService;
 import com.naidelii.chat.user.service.adapter.UserBackpackAdapter;
+import com.naidelii.data.service.LockService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.redisson.api.RLock;
-import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -21,22 +19,16 @@ import java.util.Objects;
 @Slf4j
 @RequiredArgsConstructor
 public class UserBackpackServiceImpl implements IUserBackpackService {
-    private final RedissonClient redissonClient;
     private final UserBackpackDao backpackDao;
+    private final LockService lockService;
 
     @Override
     public void distributeItem(String userId, String itemId, Integer type, String businessId) {
         // 生成幂等号
         String idempotent = generateIdempotent(itemId, type, businessId);
-        // 获取锁对象
-        RLock lock = redissonClient.getLock("distributeItem:" + idempotent);
-        // 获取锁
-        boolean isLock = lock.tryLock();
-        // 判断锁获取释放成功
-        if (!isLock) {
-            throw new MallChatException("请求太频繁了！");
-        }
-        try {
+        // key
+        String key = "distributeItem:" + idempotent;
+        lockService.executeWithLockThrows(key, () -> {
             // 首先查询幂等号是否已经存在了
             UserBackpack dbUserBackpack = backpackDao.getByIdempotent(idempotent);
             if (Objects.isNull(dbUserBackpack)) {
@@ -44,11 +36,7 @@ public class UserBackpackServiceImpl implements IUserBackpackService {
                 UserBackpack userBackpack = UserBackpackAdapter.buildDistributeItem(userId, itemId, idempotent);
                 backpackDao.save(userBackpack);
             }
-        } finally {
-            // 解锁
-            lock.unlock();
-        }
-
+        });
     }
 
     /**
