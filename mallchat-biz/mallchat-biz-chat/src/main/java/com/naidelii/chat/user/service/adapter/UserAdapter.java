@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 /**
  * @author naidelii
  */
-public class UserAdapter {
+public final class UserAdapter {
 
     public static SysUser buildSaveUser(String openId) {
         SysUser user = SysUser

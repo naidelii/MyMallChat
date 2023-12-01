@@ -6,6 +6,7 @@ import com.naidelii.chat.user.domain.vo.request.WearBadgeRequest;
 import com.naidelii.chat.user.domain.vo.response.BadgeResponse;
 import com.naidelii.chat.user.domain.vo.response.UserInfoResponse;
 import com.naidelii.chat.user.service.ISysUserService;
+import com.naidelii.chat.user.service.IUserBackpackService;
 import com.naidelii.security.entity.LoginUser;
 import com.naidelii.security.util.SecurityUtils;
 import io.swagger.annotations.Api;
@@ -29,6 +30,7 @@ import java.util.List;
 public class SysUserController {
 
     private final ISysUserService userService;
+    private final IUserBackpackService backpackService;
 
     @GetMapping("/userInfo")
     @ApiOperation("获取用户个人信息")

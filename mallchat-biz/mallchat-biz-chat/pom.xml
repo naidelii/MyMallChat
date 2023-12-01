@@ -25,5 +25,9 @@
             <groupId>com.naidelii.mallchat</groupId>
             <artifactId>mallchat-biz-wx</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+        </dependency>
     </dependencies>
 </project>

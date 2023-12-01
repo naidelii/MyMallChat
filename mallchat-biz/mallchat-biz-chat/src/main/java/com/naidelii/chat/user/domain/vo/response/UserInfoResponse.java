@@ -39,4 +39,9 @@ public class UserInfoResponse {
      */
     private Integer renameCount;
 
+    /**
+     * 佩戴的徽章
+     */
+    private String itemId;
+
 }

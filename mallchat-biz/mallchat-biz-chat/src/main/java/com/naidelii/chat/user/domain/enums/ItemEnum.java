@@ -20,6 +20,15 @@ public enum ItemEnum {
      * 改名卡
      */
     MODIFY_NAME_CARD("1", ItemTypeEnum.TOOL, "改名卡"),
+    /**
+     * 爆赞徽章
+     */
+    LIKE_BADGE("2", ItemTypeEnum.BADGE, "爆赞徽章"),
+
+    /**
+     * 前十注册徽章
+     */
+    REG_TOP10_BADGE("3", ItemTypeEnum.BADGE, "前十注册徽章"),
     ;
 
     private final String id;
