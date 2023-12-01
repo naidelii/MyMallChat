@@ -40,10 +40,11 @@ public class UserBackpackDao extends ServiceImpl<UserBackpackMapper, UserBackpac
         return updateById(userBackpack);
     }
 
-    public List<UserBackpack> getByGoodsIds(Set<String> goodsIds, String userId) {
+    public List<UserBackpack> getByGoodsIds(Set<String> itemId, String userId) {
         return lambdaQuery()
                 .eq(UserBackpack::getUserId, userId)
-                .in(UserBackpack::getItemId, goodsIds)
+                .in(UserBackpack::getItemId, itemId)
                 .list();
     }
+
 }

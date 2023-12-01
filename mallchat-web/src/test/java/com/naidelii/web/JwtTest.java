@@ -12,7 +12,8 @@ public class JwtTest {
 
     @Test
     public void createToken() {
-        String token = JwtUtils.createToken("123");
+        String userId = "1724724657689309186";
+        String token = JwtUtils.createToken(userId);
         System.out.println(token);
     }
 

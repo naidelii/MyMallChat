@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -95,5 +96,24 @@ public class SysUserServiceImpl implements ISysUserService {
         return UserAdapter.buildBadgeResponse(goodsList, backpackList, itemId);
     }
 
+    @Override
+    public void wearBadge(String userId, String itemId) {
+        // 1.确保有这个物品
+        Item item = itemDao.getById(itemId);
+        if (item == null) {
+            throw new MallChatException("暂无该物品！");
+        }
+        // 2.确保该物品是徽章
+        if (!Objects.equals(ItemTypeEnum.BADGE.getType(), item.getItemType())) {
+            throw new MallChatException("只有徽章才能佩戴！");
+        }
+        // 3.确保背包中有该徽章
+        UserBackpack backpack = backpackDao.getFirstValidItem(userId, itemId);
+        if (backpack == null) {
+            throw new MallChatException("该徽章暂未获得！");
+        }
+        // 4.佩戴
+        userDao.wearBadge(userId, itemId);
+    }
 
 }

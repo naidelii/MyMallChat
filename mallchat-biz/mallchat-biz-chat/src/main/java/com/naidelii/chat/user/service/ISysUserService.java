@@ -51,4 +51,12 @@ public interface ISysUserService {
      * @return 徽章列表
      */
     List<BadgeResponse> badgeList(String userId);
+
+    /**
+     * 佩戴徽章
+     *
+     * @param userId 用户id
+     * @param itemId 徽章id
+     */
+    void wearBadge(String userId, String itemId);
 }

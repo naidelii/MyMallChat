@@ -1,5 +1,6 @@
 package com.naidelii.chat.wx.service.impl;
 
+import com.naidelii.chat.user.dao.SysUserDao;
 import com.naidelii.chat.user.domain.entity.SysUser;
 import com.naidelii.chat.user.service.ISysUserService;
 import com.naidelii.chat.user.service.adapter.UserAdapter;
@@ -41,6 +42,7 @@ public class WeChatServiceImpl implements IWeChatService {
     private static final String AUTHORIZATION_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
     private final WeChatProperties weChatProperties;
     private final ISysUserService userService;
+    private final SysUserDao userDao;
     private final WxMpService wxMpService;
     private final WeChatOtherProperties otherProperties;
     private final IWebSocketService webSocketService;
@@ -120,7 +122,7 @@ public class WeChatServiceImpl implements IWeChatService {
     private void fillUserInfo(String id, WxOAuth2UserInfo userInfo) {
         // 更新用户信息
         SysUser user = UserAdapter.buildAuthorizeUser(id, userInfo);
-        userService.updateById(user);
+        userDao.updateById(user);
     }
 
     /**
@@ -137,7 +139,8 @@ public class WeChatServiceImpl implements IWeChatService {
             callBackUrl = URLEncoder.encode(callBack, StandardCharsets.UTF_8.toString());
         } catch (UnsupportedEncodingException e) {
             log.error("授权链接编码失败", e);
-            throw new MallChatException("授权链接编码失败!");
+            String content = CommonConstants.DEFAULT_ERROR_MESSAGE;
+            return new MessageTextBuilder().build(content, wxMessage);
         }
         String skipUrl = String.format(AUTHORIZATION_URL, weChatProperties.getAppId(), callBackUrl);
         // 回复消息

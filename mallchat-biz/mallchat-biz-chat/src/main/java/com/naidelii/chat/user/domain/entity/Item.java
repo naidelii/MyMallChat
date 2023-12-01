@@ -27,7 +27,7 @@ public class Item extends BaseEntity {
     /**
      * 物品名称
      */
-    private Integer itemName;
+    private String itemName;
 
     /**
      * 物品类型 1道具 2徽章

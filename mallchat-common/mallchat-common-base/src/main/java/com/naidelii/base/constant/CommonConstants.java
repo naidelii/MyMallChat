@@ -17,6 +17,11 @@ public interface CommonConstants {
     String PARAM_VERIFY_ERROR_STR = "请求参数不符合要求";
 
     /**
+     * 默认错误消息
+     */
+    String DEFAULT_ERROR_MESSAGE = "服务器开小差啦，请稍后再试！";
+
+    /**
      * 新用户扫码关注的事件前缀
      */
     String QR_SCENE_PREFIX = "qrscene_";

@@ -2,6 +2,7 @@ package com.naidelii.chat.user.controller;
 
 import com.naidelii.base.domain.vo.response.Result;
 import com.naidelii.chat.user.domain.vo.request.ModifyNameRequest;
+import com.naidelii.chat.user.domain.vo.request.WearBadgeRequest;
 import com.naidelii.chat.user.domain.vo.response.BadgeResponse;
 import com.naidelii.chat.user.domain.vo.response.UserInfoResponse;
 import com.naidelii.chat.user.service.ISysUserService;
@@ -29,11 +30,6 @@ public class SysUserController {
 
     private final ISysUserService userService;
 
-    /**
-     * 获取用户个人信息
-     *
-     * @return Result
-     */
     @GetMapping("/userInfo")
     @ApiOperation("获取用户个人信息")
     public Result<UserInfoResponse> getUserInfo() {
@@ -42,12 +38,7 @@ public class SysUserController {
         return Result.success(userInfo);
     }
 
-    /**
-     * 修改昵称
-     *
-     * @param data 实体类
-     * @return Result
-     */
+
     @PutMapping("/changeNickname")
     @ApiOperation("修改昵称")
     public Result<Void> changeNickname(@Validated @RequestBody ModifyNameRequest data) {
@@ -63,5 +54,15 @@ public class SysUserController {
         List<BadgeResponse> list = userService.badgeList(loginUser.getId());
         return Result.success(list);
     }
+
+
+    @PutMapping("/wearBadge")
+    @ApiOperation("佩戴徽章")
+    public Result<Void> wearBadge(@Validated @RequestBody WearBadgeRequest request) {
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        userService.wearBadge(loginUser.getId(), request.getItemId());
+        return Result.success();
+    }
+
 
 }
