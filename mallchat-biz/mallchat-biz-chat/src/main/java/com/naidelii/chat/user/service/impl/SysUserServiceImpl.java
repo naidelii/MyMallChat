@@ -3,10 +3,10 @@ package com.naidelii.chat.user.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.naidelii.base.exception.MallChatException;
-import com.naidelii.chat.user.dao.GoodsDao;
+import com.naidelii.chat.user.dao.ItemDao;
 import com.naidelii.chat.user.dao.SysUserDao;
 import com.naidelii.chat.user.dao.UserBackpackDao;
-import com.naidelii.chat.user.domain.entity.Goods;
+import com.naidelii.chat.user.domain.entity.Item;
 import com.naidelii.chat.user.domain.entity.SysUser;
 import com.naidelii.chat.user.domain.entity.UserBackpack;
 import com.naidelii.chat.user.domain.enums.ItemEnum;
@@ -33,7 +33,7 @@ public class SysUserServiceImpl implements ISysUserService {
 
     private final SysUserDao userDao;
     private final UserBackpackDao backpackDao;
-    private final GoodsDao goodsDao;
+    private final ItemDao itemDao;
 
     @Override
     public SysUser getByOpenId(String openId) {
@@ -53,7 +53,6 @@ public class SysUserServiceImpl implements ISysUserService {
         SysUser sysUser = userDao.getById(userId);
         // 获取背包中该用户的改名卡剩余次数
         Integer count = backpackDao.getCountByValidItemId(userId, ItemEnum.MODIFY_NAME_CARD.getId());
-        // 查询剩余改名次数
         return UserAdapter.buildUserInfo(sysUser, count);
     }
 
@@ -83,11 +82,11 @@ public class SysUserServiceImpl implements ISysUserService {
     @Override
     public List<BadgeResponse> badgeList(String userId) {
         // 1.查询出所有的徽章
-        List<Goods> goodsList = goodsDao.getByType(ItemTypeEnum.BADGE.getType());
+        List<Item> goodsList = itemDao.getByType(ItemTypeEnum.BADGE.getType());
         // 2.查询我所拥有的徽章（背包）
         Set<String> goodsIds = goodsList
                 .stream()
-                .map(Goods::getId)
+                .map(Item::getId)
                 .collect(Collectors.toSet());
         List<UserBackpack> backpackList = backpackDao.getByGoodsIds(goodsIds, userId);
         // 3.查询我所佩戴的徽章信息

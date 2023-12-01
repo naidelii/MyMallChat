@@ -18,15 +18,15 @@ public class UserBackpackDao extends ServiceImpl<UserBackpackMapper, UserBackpac
     public Integer getCountByValidItemId(String userId, String goodsId) {
         return lambdaQuery()
                 .eq(UserBackpack::getUserId, userId)
-                .eq(UserBackpack::getGoodsId, goodsId)
+                .eq(UserBackpack::getItemId, goodsId)
                 .eq(UserBackpack::getStatus, YesOrNoEnum.NO.getStatus())
                 .count();
     }
 
-    public UserBackpack getFirstValidItem(String userId, String goodsId) {
+    public UserBackpack getFirstValidItem(String userId, String itemId) {
         return lambdaQuery()
                 .eq(UserBackpack::getUserId, userId)
-                .eq(UserBackpack::getGoodsId, goodsId)
+                .eq(UserBackpack::getItemId, itemId)
                 .eq(UserBackpack::getStatus, YesOrNoEnum.NO.getStatus())
                 .orderByAsc(UserBackpack::getCreateTime)
                 .last("limit 1")
@@ -43,7 +43,7 @@ public class UserBackpackDao extends ServiceImpl<UserBackpackMapper, UserBackpac
     public List<UserBackpack> getByGoodsIds(Set<String> goodsIds, String userId) {
         return lambdaQuery()
                 .eq(UserBackpack::getUserId, userId)
-                .in(UserBackpack::getGoodsId, goodsIds)
+                .in(UserBackpack::getItemId, goodsIds)
                 .list();
     }
 }

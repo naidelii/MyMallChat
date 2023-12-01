@@ -1,10 +1,10 @@
 package com.naidelii.chat.user.service.adapter;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.naidelii.base.constant.enums.YesOrNoEnum;
-import com.naidelii.chat.user.domain.entity.Goods;
-import com.naidelii.chat.user.domain.entity.SysUser;
 import com.naidelii.base.constant.CommonConstants;
+import com.naidelii.base.constant.enums.YesOrNoEnum;
+import com.naidelii.chat.user.domain.entity.Item;
+import com.naidelii.chat.user.domain.entity.SysUser;
 import com.naidelii.chat.user.domain.entity.UserBackpack;
 import com.naidelii.chat.user.domain.vo.response.BadgeResponse;
 import com.naidelii.chat.user.domain.vo.response.UserInfoResponse;
@@ -67,11 +67,11 @@ public class UserAdapter {
         return vo;
     }
 
-    public static List<BadgeResponse> buildBadgeResponse(List<Goods> goodsList, List<UserBackpack> backpackList, String itemId) {
+    public static List<BadgeResponse> buildBadgeResponse(List<Item> goodsList, List<UserBackpack> backpackList, String itemId) {
         // 已拥有的徽章
         Set<String> alreadyOwned = backpackList
                 .stream()
-                .map(UserBackpack::getGoodsId)
+                .map(UserBackpack::getItemId)
                 .collect(Collectors.toSet());
         return goodsList
                 .stream()

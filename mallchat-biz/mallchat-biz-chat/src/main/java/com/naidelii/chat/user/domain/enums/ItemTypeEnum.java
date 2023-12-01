@@ -17,9 +17,9 @@ import java.util.stream.Collectors;
 public enum ItemTypeEnum {
 
     /**
-     * 改名卡
+     * 道具
      */
-    MODIFY_NAME_CARD(1, "改名卡"),
+    TOOL(1, "道具"),
     /**
      * 徽章
      */

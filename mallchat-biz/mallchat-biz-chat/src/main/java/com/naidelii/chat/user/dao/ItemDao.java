@@ -1,21 +1,22 @@
 package com.naidelii.chat.user.dao;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.naidelii.chat.user.domain.entity.Goods;
-import com.naidelii.chat.user.mapper.GoodsMapper;
+import com.naidelii.chat.user.domain.entity.Item;
+import com.naidelii.chat.user.mapper.ItemMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 
 /**
  * @author naidelii
  */
 @Service
-public class GoodsDao extends ServiceImpl<GoodsMapper, Goods> {
+public class ItemDao extends ServiceImpl<ItemMapper, Item> {
 
-    public List<Goods> getByType(Integer type) {
+    public List<Item> getByType(Integer type) {
         return lambdaQuery()
-                .eq(Goods::getType, type)
+                .eq(Item::getItemType, type)
                 .list();
     }
 }

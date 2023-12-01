@@ -1,6 +1,5 @@
 package com.naidelii.chat.user.controller;
 
-import com.naidelii.chat.user.service.IGoodsService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,14 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author naidelii
  */
-@RequestMapping("/goods")
+@RequestMapping("/item")
 @RestController
 @Slf4j
 @RequiredArgsConstructor
 @Api(tags = "物品表")
-public class GoodsController {
+public class ItemController {
 
-    private final IGoodsService goodsService;
 
 
 }

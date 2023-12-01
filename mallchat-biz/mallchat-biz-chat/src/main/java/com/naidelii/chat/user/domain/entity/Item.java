@@ -14,8 +14,8 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@TableName("goods")
-public class Goods extends BaseEntity {
+@TableName("item")
+public class Item extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -25,9 +25,14 @@ public class Goods extends BaseEntity {
     private String id;
 
     /**
-     * 物品类型 1改名卡 2徽章
+     * 物品名称
      */
-    private Integer type;
+    private Integer itemName;
+
+    /**
+     * 物品类型 1道具 2徽章
+     */
+    private Integer itemType;
     /**
      * 物品功能描述
      */

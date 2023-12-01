@@ -32,7 +32,7 @@ public class UserBackpack extends BaseEntity {
     /**
      * 物品id
      */
-    private String goodsId;
+    private String itemId;
     /**
      * 使用状态 0.待使用 1已使用
      */

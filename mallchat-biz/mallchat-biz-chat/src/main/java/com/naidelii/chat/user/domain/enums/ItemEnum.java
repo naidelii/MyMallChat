@@ -19,27 +19,7 @@ public enum ItemEnum {
     /**
      * 改名卡
      */
-    MODIFY_NAME_CARD("1", ItemTypeEnum.MODIFY_NAME_CARD, "改名卡"),
-    /**
-     * 爆赞徽章
-     */
-    LIKE_BADGE("2", ItemTypeEnum.BADGE, "爆赞徽章"),
-    /**
-     * 前十注册徽章
-     */
-    REG_TOP10_BADGE("3", ItemTypeEnum.BADGE, "前十注册徽章"),
-    /**
-     * 前100注册徽章
-     */
-    REG_TOP100_BADGE("4", ItemTypeEnum.BADGE, "前100注册徽章"),
-    /**
-     * 知识星球
-     */
-    PLANET("5", ItemTypeEnum.BADGE, "知识星球"),
-    /**
-     * 代码贡献者
-     */
-    CONTRIBUTOR("6", ItemTypeEnum.BADGE, "代码贡献者"),
+    MODIFY_NAME_CARD("1", ItemTypeEnum.TOOL, "改名卡"),
     ;
 
     private final String id;
