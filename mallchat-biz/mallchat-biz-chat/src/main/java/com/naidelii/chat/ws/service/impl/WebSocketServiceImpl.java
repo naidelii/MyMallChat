@@ -5,6 +5,7 @@ import cn.hutool.json.JSONUtil;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.naidelii.base.exception.MallChatException;
+import com.naidelii.chat.common.event.UserOnlineEvent;
 import com.naidelii.chat.user.dao.SysUserDao;
 import com.naidelii.chat.user.domain.entity.SysUser;
 import com.naidelii.chat.user.service.ILoginService;
@@ -14,11 +15,13 @@ import com.naidelii.chat.ws.domain.vo.response.ResponseMessage;
 import com.naidelii.chat.ws.service.IWebSocketService;
 import com.naidelii.chat.ws.service.adapter.MessageAdapter;
 import com.naidelii.security.util.JwtUtils;
+import com.naidelii.websocket.util.NettyUtils;
 import io.netty.channel.Channel;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -35,6 +38,7 @@ public class WebSocketServiceImpl implements IWebSocketService {
 
     private final SysUserDao userDao;
     private final ILoginService loginService;
+    private final ApplicationEventPublisher publisher;
 
     /**
      * 临时存储登陆码和Channel
@@ -165,6 +169,12 @@ public class WebSocketServiceImpl implements IWebSocketService {
         // 维护channel与用户的关系
         WebSocketChannelExtraDto dto = ONLINE_USER_MAP.get(channel);
         dto.setUid(user.getId());
+        // 设置ip信息
+        String ip = NettyUtils.getAttr(channel, NettyUtils.IP);
+        user.refreshIp(ip);
+        // 用户上线事件
+        UserOnlineEvent userOnlineEvent = new UserOnlineEvent(this, user);
+        publisher.publishEvent(userOnlineEvent);
         // 将登陆成功的结果返回给通知客户端
         ResponseMessage<LoginSuccess> message = MessageAdapter.buildLoginSuccessResp(user, token);
         // 发送消息

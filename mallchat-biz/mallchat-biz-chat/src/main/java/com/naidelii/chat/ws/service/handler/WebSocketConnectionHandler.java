@@ -1,5 +1,6 @@
 package com.naidelii.chat.ws.service.handler;
 
+import com.naidelii.chat.ws.intercepter.PortalHandshakeInterceptor;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -33,6 +34,8 @@ public class WebSocketConnectionHandler extends ChannelInitializer<SocketChannel
         pipeline.addLast(new HttpObjectAggregator(8192));
         // 以块方式写，添加 chunkedWriter 处理器
         pipeline.addLast(new ChunkedWriteHandler());
+        // 自定义处理器：解析ip等操作
+        pipeline.addLast(new PortalHandshakeInterceptor());
         // WebSocket握手处理器，处理WebSocket协议的握手（第一次HTTP请求），ping-pong处理，close处理，
         // 对于二进制或者文件数据，直接交付给下层处理
         pipeline.addLast(new WebSocketServerProtocolHandler("/ws"));

@@ -1,13 +1,16 @@
 package com.naidelii.chat.user.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import com.naidelii.data.domain.entity.BaseEntity;
 import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.util.Date;
+import java.util.Objects;
 
 
 /**
@@ -16,7 +19,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("sys_user")
+@TableName(value = "sys_user", autoResultMap = true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -62,7 +65,8 @@ public class SysUser extends BaseEntity {
     /**
      * ip信息
      */
-    private String ipInfo;
+    @TableField(value = "ip_info", typeHandler = JacksonTypeHandler.class)
+    private IpInfo ipInfo;
 
     /**
      * 用户状态(1-正常,2-冻结)
@@ -74,4 +78,15 @@ public class SysUser extends BaseEntity {
      */
     private String itemId;
 
+    /**
+     * 刷新ip
+     *
+     * @param ip ip
+     */
+    public void refreshIp(String ip) {
+        if (Objects.isNull(ipInfo)) {
+            ipInfo = new IpInfo();
+        }
+        ipInfo.refreshIp(ip);
+    }
 }
