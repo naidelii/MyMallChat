@@ -1,4 +1,4 @@
-package com.naidelii.chat.user.config;
+package com.naidelii.chat.common.config;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 import org.springframework.cache.CacheManager;

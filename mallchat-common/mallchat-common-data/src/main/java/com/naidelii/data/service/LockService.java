@@ -9,7 +9,6 @@ import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
-import java.util.function.Supplier;
 
 /**
  * @author naidelii
@@ -31,7 +30,7 @@ public class LockService {
      * @return 操作结果
      */
     @SneakyThrows
-    public <T> T executeWithLockThrows(String key, int waitTime, TimeUnit unit, Supplier<T> supplier) {
+    public <T> T executeWithLockThrows(String key, int waitTime, TimeUnit unit, SupplierThrow<T> supplier) {
         // 获取锁对象
         RLock lock = redissonClient.getLock(key);
         // 获取锁
@@ -52,6 +51,22 @@ public class LockService {
             runnable.run();
             return null;
         });
+    }
+
+    /**
+     * 函数式接口，用于提供结果并可能抛出异常。
+     *
+     * @param <T> 结果类型
+     */
+    @FunctionalInterface
+    public interface SupplierThrow<T> {
+        /**
+         * 获取结果。
+         *
+         * @return 结果值
+         * @throws Throwable 异常类型
+         */
+        T get() throws Throwable;
     }
 
 }
