@@ -26,9 +26,14 @@ public enum ItemEnum {
     LIKE_BADGE("2", ItemTypeEnum.BADGE, "爆赞徽章"),
 
     /**
-     * 前十注册徽章
+     * 前10注册徽章
      */
     REG_TOP10_BADGE("3", ItemTypeEnum.BADGE, "前十注册徽章"),
+
+    /**
+     * 前100注册徽章
+     */
+    REG_TOP100_BADGE("4", ItemTypeEnum.BADGE, "前100注册徽章"),
     ;
 
     private final String id;

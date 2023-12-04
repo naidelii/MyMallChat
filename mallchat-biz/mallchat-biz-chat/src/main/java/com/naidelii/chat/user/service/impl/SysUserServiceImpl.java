@@ -3,6 +3,7 @@ package com.naidelii.chat.user.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.naidelii.base.exception.MallChatException;
+import com.naidelii.chat.common.event.UserRegisterEvent;
 import com.naidelii.chat.user.dao.ItemDao;
 import com.naidelii.chat.user.dao.SysUserDao;
 import com.naidelii.chat.user.dao.UserBackpackDao;
@@ -17,6 +18,7 @@ import com.naidelii.chat.user.domain.vo.response.UserInfoResponse;
 import com.naidelii.chat.user.service.ISysUserService;
 import com.naidelii.chat.user.service.adapter.UserAdapter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +37,7 @@ public class SysUserServiceImpl implements ISysUserService {
     private final SysUserDao userDao;
     private final UserBackpackDao backpackDao;
     private final ItemDao itemDao;
+    private final ApplicationEventPublisher publisher;
 
     @Override
     public SysUser getByOpenId(String openId) {
@@ -46,6 +49,9 @@ public class SysUserServiceImpl implements ISysUserService {
     @Transactional(rollbackFor = Exception.class)
     public void register(SysUser sysUser) {
         userDao.save(sysUser);
+        // 发布用户注册事件
+        UserRegisterEvent userRegisterEvent = new UserRegisterEvent(this, sysUser);
+        publisher.publishEvent(userRegisterEvent);
     }
 
     @Override
