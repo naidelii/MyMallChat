@@ -7,6 +7,8 @@ import com.naidelii.chat.user.service.adapter.UserBackpackAdapter;
 import com.naidelii.data.annotation.RedissonLock;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -20,12 +22,19 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class UserBackpackServiceImpl implements IUserBackpackService {
     private final UserBackpackDao backpackDao;
+    @Lazy
+    @Autowired
+    private UserBackpackServiceImpl backpackService;
 
     @Override
-    @RedissonLock(key = "'distributeItem:' + #type + ':' + #businessId + ':' + #itemId")
     public void distributeItem(String userId, String itemId, Integer type, String businessId) {
         // 生成幂等号
         String idempotent = generateIdempotent(itemId, type, businessId);
+        backpackService.doDistributeItem(idempotent, userId, itemId);
+    }
+
+    @RedissonLock(key = "#idempotent", waitTime = 5)
+    public void doDistributeItem(String idempotent, String userId, String itemId) {
         // 首先查询幂等号是否已经存在了
         UserBackpack dbUserBackpack = backpackDao.getByIdempotent(idempotent);
         if (Objects.isNull(dbUserBackpack)) {

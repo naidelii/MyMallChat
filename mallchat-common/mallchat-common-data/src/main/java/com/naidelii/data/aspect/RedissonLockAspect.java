@@ -1,4 +1,4 @@
-package com.naidelii.chat.common.aspect;
+package com.naidelii.data.aspect;
 
 import com.naidelii.base.util.SpElUtils;
 import com.naidelii.data.annotation.RedissonLock;
