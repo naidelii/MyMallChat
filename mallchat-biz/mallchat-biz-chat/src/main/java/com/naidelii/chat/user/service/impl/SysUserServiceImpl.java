@@ -13,7 +13,6 @@ import com.naidelii.chat.user.domain.entity.UserBackpack;
 import com.naidelii.chat.user.domain.enums.ItemEnum;
 import com.naidelii.chat.user.domain.enums.ItemTypeEnum;
 import com.naidelii.chat.user.domain.vo.request.ModifyNameRequest;
-import com.naidelii.chat.user.domain.vo.response.BadgeResponse;
 import com.naidelii.chat.user.domain.vo.response.UserInfoResponse;
 import com.naidelii.chat.user.service.ISysUserService;
 import com.naidelii.chat.user.service.adapter.UserAdapter;
@@ -22,10 +21,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * @author naidelii
@@ -86,21 +82,6 @@ public class SysUserServiceImpl implements ISysUserService {
         }
     }
 
-    @Override
-    public List<BadgeResponse> badgeList(String userId) {
-        // 1.查询出所有的徽章
-        List<Item> goodsList = itemDao.getByType(ItemTypeEnum.BADGE.getType());
-        // 2.查询我所拥有的徽章（背包）
-        Set<String> goodsIds = goodsList
-                .stream()
-                .map(Item::getId)
-                .collect(Collectors.toSet());
-        List<UserBackpack> backpackList = backpackDao.getByGoodsIds(goodsIds, userId);
-        // 3.查询我所佩戴的徽章信息
-        SysUser user = userDao.getById(userId);
-        String itemId = user.getItemId();
-        return UserAdapter.buildBadgeResponse(goodsList, backpackList, itemId);
-    }
 
     @Override
     public void wearBadge(String userId, String itemId) {

@@ -44,13 +44,7 @@ public interface ISysUserService {
      */
     void changeNickname(String userId, ModifyNameRequest updateData);
 
-    /**
-     * 用户徽章列表
-     *
-     * @param userId 用户id
-     * @return 徽章列表
-     */
-    List<BadgeResponse> badgeList(String userId);
+
 
     /**
      * 佩戴徽章

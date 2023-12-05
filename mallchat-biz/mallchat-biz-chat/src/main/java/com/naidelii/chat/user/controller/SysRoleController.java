@@ -8,14 +8,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 /**
+ * 角色表
+ *
  * @author naidelii
+ * @date 2023-12-05 09:35:52
  */
-@RequestMapping("/item")
+@RequestMapping("/role")
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@Api(tags = "物品表")
-public class ItemController {
-
+@Api(tags = "角色表")
+public class SysRoleController {
 
 }
