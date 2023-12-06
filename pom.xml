@@ -40,6 +40,7 @@
         <caffeine.version>2.9.3</caffeine.version>
         <sa-token.version>1.34.0</sa-token.version>
         <redisson.version>3.17.1</redisson.version>
+        <skipTests>true</skipTests>
     </properties>
 
     <!-- 对子项目的依赖版本进行管理，不会实际引入jar -->
@@ -87,42 +88,42 @@
             <dependency>
                 <groupId>com.naidelii.mallchat</groupId>
                 <artifactId>mallchat-common-base</artifactId>
-                <version>${version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.naidelii.mallchat</groupId>
                 <artifactId>mallchat-common-data</artifactId>
-                <version>${version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.naidelii.mallchat</groupId>
                 <artifactId>mallchat-biz-tomcat-websocket</artifactId>
-                <version>${version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.naidelii.mallchat</groupId>
                 <artifactId>mallchat-common-security</artifactId>
-                <version>${version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.naidelii.mallchat</groupId>
                 <artifactId>mallchat-biz-netty</artifactId>
-                <version>${version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.naidelii.mallchat</groupId>
                 <artifactId>mallchat-common-swagger</artifactId>
-                <version>${version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.naidelii.mallchat</groupId>
                 <artifactId>mallchat-biz-chat</artifactId>
-                <version>${version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.naidelii.mallchat</groupId>
                 <artifactId>mallchat-biz-wx</artifactId>
-                <version>${version}</version>
+                <version>${project.version}</version>
             </dependency>
             <!-- 使用Swagger2-->
             <dependency>
@@ -130,6 +131,7 @@
                 <artifactId>knife4j-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-json</artifactId>
@@ -189,4 +191,18 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
 </project>

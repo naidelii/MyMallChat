@@ -10,6 +10,8 @@ import com.naidelii.chat.ws.domain.vo.response.ResponseMessage;
 import com.naidelii.base.exception.MallChatException;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Set;
+
 /**
  * @author naidelii
  */
@@ -23,7 +25,7 @@ public class MessageAdapter {
         return result;
     }
 
-    public static ResponseMessage<LoginSuccess> buildLoginSuccessResp(SysUser user, String token) {
+    public static ResponseMessage<LoginSuccess> buildLoginSuccessResp(SysUser user, String token, Set<String> roles) {
         ResponseMessage<LoginSuccess> result = new ResponseMessage<>();
         result.setType(ResponseTypeEnum.LOGIN_SUCCESS.getType());
         LoginSuccess data = LoginSuccess
@@ -32,6 +34,7 @@ public class MessageAdapter {
                 .avatar(user.getAvatar())
                 .nickname(user.getNickname())
                 .token(token)
+                .roles(roles)
                 .build();
         result.setData(data);
         return result;

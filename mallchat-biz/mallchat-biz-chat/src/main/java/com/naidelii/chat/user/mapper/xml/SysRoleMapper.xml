@@ -4,5 +4,12 @@
 <mapper namespace="com.naidelii.chat.user.mapper.SysRoleMapper">
 
 
-
+    <select id="getRolesByUserId" resultType="java.lang.String">
+        select
+            sr.role_code
+        from sys_role sr
+            left join sys_user_role sur on sr.id = sur.role_id
+            left join sys_user su on sur.user_id = su.id
+        where su.id = #{userId}
+    </select>
 </mapper>

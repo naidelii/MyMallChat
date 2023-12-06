@@ -9,6 +9,7 @@ import com.naidelii.chat.common.event.UserOnlineEvent;
 import com.naidelii.chat.user.dao.SysUserDao;
 import com.naidelii.chat.user.domain.entity.SysUser;
 import com.naidelii.chat.user.service.ILoginService;
+import com.naidelii.chat.user.service.ISysRoleService;
 import com.naidelii.chat.ws.domain.dto.WebSocketChannelExtraDto;
 import com.naidelii.chat.ws.domain.vo.response.LoginSuccess;
 import com.naidelii.chat.ws.domain.vo.response.ResponseMessage;
@@ -26,6 +27,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -39,6 +41,7 @@ public class WebSocketServiceImpl implements IWebSocketService {
     private final SysUserDao userDao;
     private final ILoginService loginService;
     private final ApplicationEventPublisher publisher;
+    private final ISysRoleService roleService;
 
     /**
      * 临时存储登陆码和Channel
@@ -175,8 +178,10 @@ public class WebSocketServiceImpl implements IWebSocketService {
         // 用户上线事件
         UserOnlineEvent userOnlineEvent = new UserOnlineEvent(this, user);
         publisher.publishEvent(userOnlineEvent);
+        // 查询出用户的角色
+        Set<String> roles = roleService.getRolesByUserId(user.getId());
         // 将登陆成功的结果返回给通知客户端
-        ResponseMessage<LoginSuccess> message = MessageAdapter.buildLoginSuccessResp(user, token);
+        ResponseMessage<LoginSuccess> message = MessageAdapter.buildLoginSuccessResp(user, token, roles);
         // 发送消息
         sendMessage(channel, message);
     }

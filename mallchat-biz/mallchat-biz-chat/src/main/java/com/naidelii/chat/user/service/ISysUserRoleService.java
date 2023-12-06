@@ -1,6 +1,8 @@
 package com.naidelii.chat.user.service;
 
 
+import com.naidelii.chat.user.domain.entity.SysUserRole;
+
 /**
  * 用户角色关联表
  *
@@ -9,5 +11,11 @@ package com.naidelii.chat.user.service;
  */
 public interface ISysUserRoleService {
 
+    /**
+     * 添加用户与角色关联的数据
+     *
+     * @param data 数据
+     */
+    void add(SysUserRole data);
 }
 

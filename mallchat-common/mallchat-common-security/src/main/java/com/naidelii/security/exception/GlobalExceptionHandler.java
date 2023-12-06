@@ -12,6 +12,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.yaml.snakeyaml.constructor.DuplicateKeyException;
 
 import java.util.List;
 
@@ -59,6 +60,12 @@ public class GlobalExceptionHandler {
     public Result<?> handlerMallChatException(MallChatException e) {
         log.error("MallChat exception！The reason is：{}", e.getMessage());
         return Result.fail(e.getMessage());
+    }
+
+    @ExceptionHandler(DuplicateKeyException.class)
+    public Result<?> handleDuplicateKeyException(DuplicateKeyException e) {
+        log.error(e.getMessage(), e);
+        return Result.fail("数据库中已存在该记录");
     }
 
     /**

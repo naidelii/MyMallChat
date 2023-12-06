@@ -38,9 +38,9 @@ public class SysUserController {
 
     @PutMapping("/changeNickname")
     @ApiOperation("修改昵称")
-    public Result<Void> changeNickname(@Validated @RequestBody ModifyNameRequest data) {
+    public Result<Void> changeNickname(@Validated @RequestBody ModifyNameRequest request) {
         LoginUser loginUser = SecurityUtils.getLoginUser();
-        userService.changeNickname(loginUser.getId(), data);
+        userService.changeNickname(loginUser.getId(), request);
         return Result.success();
     }
 
