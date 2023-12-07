@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 /**
  * @author naidelii
  */
@@ -38,5 +40,11 @@ public class LoginUser {
      * 客户端的ip
      */
     private String clientIp;
+
+    /**
+     * 角色标识集合
+     */
+    private Set<String> roles;
+
 
 }

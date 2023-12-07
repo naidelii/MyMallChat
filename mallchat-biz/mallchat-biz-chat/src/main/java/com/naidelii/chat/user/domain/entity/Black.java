@@ -28,7 +28,7 @@ public class Black extends BaseEntity implements Serializable {
     private String id;
 
     /**
-     * 类型（用户id，ip）
+     * 类型（1：用户id，2：ip）
      */
     private Integer type;
     /**

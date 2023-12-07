@@ -1,15 +1,15 @@
 package com.naidelii.chat.user.dao;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.naidelii.chat.user.domain.entity.Item;
+import com.naidelii.base.constant.CommonConstants;
 import com.naidelii.chat.user.domain.entity.SysUser;
 import com.naidelii.chat.user.mapper.SysUserMapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author naidelii
  */
-@Service
+@Repository
 public class SysUserDao extends ServiceImpl<SysUserMapper, SysUser> {
 
     /**
@@ -35,5 +35,12 @@ public class SysUserDao extends ServiceImpl<SysUserMapper, SysUser> {
         user.setId(userId);
         user.setItemId(itemId);
         baseMapper.updateById(user);
+    }
+
+    public void invalidUserId(String userId) {
+        SysUser updateUser = new SysUser();
+        updateUser.setId(userId);
+        updateUser.setStatus(CommonConstants.USER_FROZEN_STATE);
+        baseMapper.updateById(updateUser);
     }
 }

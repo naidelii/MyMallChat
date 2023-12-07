@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -42,6 +43,7 @@ public class WebSocketServiceImpl implements IWebSocketService {
     private final ILoginService loginService;
     private final ApplicationEventPublisher publisher;
     private final ISysRoleService roleService;
+    private final ThreadPoolTaskExecutor websocketExecutor;
 
     /**
      * 临时存储登陆码和Channel
@@ -159,6 +161,14 @@ public class WebSocketServiceImpl implements IWebSocketService {
             SysUser user = userDao.getById(userId);
             loginSuccess(channel, user, token);
         }
+    }
+
+    @Override
+    public void broadcast(ResponseMessage<?> responseMessage) {
+        ONLINE_USER_MAP.forEach((channel, userInfo) -> websocketExecutor.execute(() -> {
+            // 广播消息
+            sendMessage(channel, responseMessage);
+        }));
     }
 
     /**

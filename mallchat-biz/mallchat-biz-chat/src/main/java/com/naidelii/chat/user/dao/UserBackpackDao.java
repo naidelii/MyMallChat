@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.naidelii.base.constant.enums.YesOrNoEnum;
 import com.naidelii.chat.user.domain.entity.UserBackpack;
 import com.naidelii.chat.user.mapper.UserBackpackMapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Set;
@@ -12,7 +12,7 @@ import java.util.Set;
 /**
  * @author naidelii
  */
-@Service
+@Repository
 public class UserBackpackDao extends ServiceImpl<UserBackpackMapper, UserBackpack> {
 
     public Integer getCountByValidItemId(String userId, String goodsId) {

@@ -47,7 +47,6 @@ public class GlobalExceptionHandler {
         return Result.fail(String.format("不支持'%s'请求", e.getMethod()));
     }
 
-
     /**
      * 处理自定义异常
      *

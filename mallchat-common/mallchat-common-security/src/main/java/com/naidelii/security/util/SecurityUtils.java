@@ -20,9 +20,9 @@ public final class SecurityUtils {
     /**
      * 设置用户缓存到会话中
      */
-    public static void setLoginUser(LoginUser loginUser) {
+    public static void setLoginUser(String token, LoginUser loginUser) {
         // 存储到线程中
-        SecurityContext.set(loginUser);
+        SecurityContext.set(token, loginUser);
     }
 
     /**

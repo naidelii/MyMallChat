@@ -51,13 +51,14 @@ public interface IWebSocketService {
     /**
      * 根据openId完成扫码登录
      *
-     * @param code 登陆码
+     * @param code   登陆码
      * @param userId 用户id
      */
     void scanLoginSuccess(String code, String userId);
 
     /**
      * 根据openId获取登陆码
+     *
      * @param openId openId
      * @return 登录码
      */
@@ -65,14 +66,24 @@ public interface IWebSocketService {
 
     /**
      * 等待授权
+     *
      * @param code 登陆码
      */
     void waitAuthorize(String code);
 
     /**
      * 身份认证
-     * @param token token
+     *
+     * @param token   token
      * @param channel channel
      */
     void authentication(String token, Channel channel);
+
+
+    /**
+     * 广播消息
+     *
+     * @param responseMessage 消息内容
+     */
+    void broadcast(ResponseMessage<?> responseMessage);
 }

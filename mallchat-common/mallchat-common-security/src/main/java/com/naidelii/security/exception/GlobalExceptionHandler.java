@@ -6,13 +6,13 @@ import com.naidelii.base.domain.vo.response.Result;
 import com.naidelii.base.exception.MallChatException;
 import com.naidelii.base.exception.NotLoginException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.yaml.snakeyaml.constructor.DuplicateKeyException;
 
 import java.util.List;
 
@@ -63,7 +63,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(DuplicateKeyException.class)
-    public Result<?> handleDuplicateKeyException(DuplicateKeyException e) {
+    public Result<Object> handleDuplicateKeyException(DuplicateKeyException e) {
         log.error(e.getMessage(), e);
         return Result.fail("数据库中已存在该记录");
     }

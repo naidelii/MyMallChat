@@ -1,5 +1,6 @@
 package com.naidelii.chat.ws.domain.enums;
 
+import com.naidelii.chat.ws.domain.vo.response.BlackUser;
 import com.naidelii.chat.ws.domain.vo.response.LoginSuccess;
 import com.naidelii.chat.ws.domain.vo.response.LoginUrl;
 import lombok.AllArgsConstructor;
@@ -30,7 +31,15 @@ public enum ResponseTypeEnum {
     /**
      * token失效
      */
-    INVALID_TOKEN(4, null);
+    INVALID_TOKEN(4, null),
+
+    /**
+     * 拉黑用户
+     */
+    BLACK(5, BlackUser.class),
+    ;
+
+
 
     private final Integer type;
     private final Class<?> dataClass;

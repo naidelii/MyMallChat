@@ -68,9 +68,19 @@ public interface CommonConstants {
     String MALL_CHAT_EXECUTOR = "mallChatExecutor";
 
     /**
+     * WebSocket线程池
+     */
+    String WS_EXECUTOR = "websocketExecutor";
+
+    /**
      * 项目共用线程池前缀
      */
     String MALL_CHAT_EXECUTOR_PREFIX = "mallChat-executor-";
+
+    /**
+     * websocket线程池前缀
+     */
+    String WS_EXECUTOR_PREFIX = "websocket-executor-";
 
     /**
      * JSON

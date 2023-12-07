@@ -4,6 +4,7 @@ import cn.hutool.json.JSONUtil;
 import com.naidelii.chat.user.domain.entity.SysUser;
 import com.naidelii.chat.ws.domain.enums.ResponseTypeEnum;
 import com.naidelii.chat.ws.domain.vo.request.RequestMessage;
+import com.naidelii.chat.ws.domain.vo.response.BlackUser;
 import com.naidelii.chat.ws.domain.vo.response.LoginSuccess;
 import com.naidelii.chat.ws.domain.vo.response.LoginUrl;
 import com.naidelii.chat.ws.domain.vo.response.ResponseMessage;
@@ -60,5 +61,13 @@ public class MessageAdapter {
         ResponseMessage<Object> result = new ResponseMessage<>();
         result.setType(ResponseTypeEnum.INVALID_TOKEN.getType());
         return result;
+    }
+
+    public static ResponseMessage<BlackUser> buildBlack(SysUser user) {
+        ResponseMessage<BlackUser> responseMessage = new ResponseMessage<>();
+        BlackUser blackUser = new BlackUser();
+        blackUser.setUserId(user.getId());
+        responseMessage.setType(ResponseTypeEnum.BLACK.getType());
+        return responseMessage;
     }
 }

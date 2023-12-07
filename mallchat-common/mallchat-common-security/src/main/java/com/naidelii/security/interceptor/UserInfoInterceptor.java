@@ -1,9 +1,8 @@
 package com.naidelii.security.interceptor;
 
-import cn.hutool.extra.servlet.ServletUtil;
 import com.naidelii.base.constant.CommonConstants;
-import com.naidelii.security.entity.LoginUser;
 import com.naidelii.security.util.JwtUtils;
+import com.naidelii.security.util.SecurityContext;
 import com.naidelii.security.util.SecurityUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -25,15 +24,8 @@ public class UserInfoInterceptor implements HandlerInterceptor {
             // 解析token
             boolean verify = JwtUtils.verify(token);
             if (verify) {
-                // 用户id
-                String userId = JwtUtils.getUserInfo(token);
-                LoginUser loginUser = new LoginUser();
-                loginUser.setId(userId);
-                // 用户客户端ip
-                String clientIp = ServletUtil.getClientIP(request);
-                loginUser.setClientIp(clientIp);
-                // 放进上下文中
-                SecurityUtils.setLoginUser(loginUser);
+                // 通过token获取用户信息设置进上下文
+                SecurityContext.setLoginUser(token);
             }
         }
         // 通过验证

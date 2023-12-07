@@ -3,6 +3,7 @@ package com.naidelii.chat.user.service.adapter;
 import cn.hutool.core.bean.BeanUtil;
 import com.naidelii.base.constant.CommonConstants;
 import com.naidelii.base.constant.enums.YesOrNoEnum;
+import com.naidelii.chat.user.domain.entity.IpInfo;
 import com.naidelii.chat.user.domain.entity.Item;
 import com.naidelii.chat.user.domain.entity.SysUser;
 import com.naidelii.chat.user.domain.entity.UserBackpack;
@@ -10,6 +11,7 @@ import com.naidelii.chat.user.domain.vo.response.BadgeResponse;
 import com.naidelii.chat.user.domain.vo.response.UserInfoResponse;
 import com.naidelii.security.entity.LoginUser;
 import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -52,12 +54,19 @@ public final class UserAdapter {
                 .build();
     }
 
-    public static LoginUser buildLoginUser(SysUser updateUser) {
-        return LoginUser.builder()
-                .id(updateUser.getId())
-                .nickname(updateUser.getNickname())
-                .avatar(updateUser.getAvatar())
+    public static LoginUser buildLoginUser(SysUser user, Set<String> roles) {
+        LoginUser loginUser = LoginUser.builder()
+                .id(user.getId())
+                .nickname(user.getNickname())
+                .avatar(user.getAvatar())
+                .sex(user.getSex())
+                .roles(roles)
                 .build();
+        IpInfo ipInfo = user.getIpInfo();
+        if (Objects.nonNull(ipInfo)) {
+            loginUser.setClientIp(StringUtils.isNotEmpty(ipInfo.getUpdateIp()) ? ipInfo.getUpdateIp() : ipInfo.getCreateIp());
+        }
+        return loginUser;
     }
 
     public static UserInfoResponse buildUserInfo(SysUser sysUser, Integer count) {
