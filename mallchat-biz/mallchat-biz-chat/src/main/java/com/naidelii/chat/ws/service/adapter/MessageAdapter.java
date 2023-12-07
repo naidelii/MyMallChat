@@ -68,6 +68,7 @@ public class MessageAdapter {
         BlackUser blackUser = new BlackUser();
         blackUser.setUserId(user.getId());
         responseMessage.setType(ResponseTypeEnum.BLACK.getType());
+        responseMessage.setData(blackUser);
         return responseMessage;
     }
 }

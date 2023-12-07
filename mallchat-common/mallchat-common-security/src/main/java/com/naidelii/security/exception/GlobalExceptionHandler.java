@@ -24,15 +24,14 @@ import java.util.List;
 @Slf4j
 public class GlobalExceptionHandler {
 
-
     /**
      * 处理未知异常
      *
      * @param e 异常对象
      * @return 返回结果
      */
-    @ExceptionHandler(Exception.class)
-    public Result<Object> handleException(Exception e) {
+    @ExceptionHandler(Throwable.class)
+    public Result<Object> handleException(Throwable e) {
         log.error("system exception！The reason is：{}", e.getMessage(), e);
         return Result.fail();
     }
@@ -45,7 +44,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public Result<Object> handleException(HttpRequestMethodNotSupportedException e) {
-        log.error(e.getMessage(), e);
+        log.error("HttpRequestMethodNotSupportedException！The reason is：{}", e.getMessage());
         return Result.fail(String.format("不支持'%s'请求", e.getMethod()));
     }
 
@@ -64,7 +63,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DuplicateKeyException.class)
     public Result<Object> handleDuplicateKeyException(DuplicateKeyException e) {
-        log.error(e.getMessage(), e);
+        log.error("handleDuplicateKeyException！The reason is：{}", e.getMessage());
         return Result.fail("数据库中已存在该记录");
     }
 
@@ -76,7 +75,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(NotLoginException.class)
     public Result<?> handlerNotLoginException(NotLoginException e) {
-        log.error("MallChat exception！The reason is：{}", e.getMessage(), e);
+        log.error("NotLoginException！The reason is：{}", e.getMessage());
         return Result.unauthorized();
     }
 
