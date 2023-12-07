@@ -46,8 +46,11 @@ public class BlackServiceImpl implements IBlackService {
         // 查询用户的ip同时拉黑
         IpInfo ipInfo = user.getIpInfo();
         if (Objects.nonNull(ipInfo)) {
-            blockIp(ipInfo.getCreateIp());
+            // 如果ip相同，只拉黑一个
             blockIp(ipInfo.getUpdateIp());
+            if (!Objects.equals(ipInfo.getCreateIp(), ipInfo.getUpdateIp())) {
+                blockIp(ipInfo.getCreateIp());
+            }
         }
         // 推送拉黑事件
         UserBlackEvent event = new UserBlackEvent(this, user);

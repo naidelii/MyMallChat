@@ -1,6 +1,7 @@
 package com.naidelii.chat.common.config;
 
 import cn.hutool.core.text.CharSequenceUtil;
+import com.naidelii.chat.user.interceptor.BlackInterceptor;
 import com.naidelii.chat.user.interceptor.RoleInterceptor;
 import com.naidelii.security.config.SecurityProperties;
 import com.naidelii.security.interceptor.TokenInterceptor;
@@ -23,6 +24,7 @@ public class WebConfiguration implements WebMvcConfigurer {
 
     private final SecurityProperties securityProperties;
     private final RoleInterceptor roleInterceptor;
+    private final BlackInterceptor blackInterceptor;
 
     /**
      * 添加token拦截器（作用时机DispatcherServlet之后），用来检查是否登录
@@ -40,5 +42,9 @@ public class WebConfiguration implements WebMvcConfigurer {
                 .excludePathPatterns(CharSequenceUtil.splitToArray(securityProperties.getExcludes(), ","))
                 .excludePathPatterns(CharSequenceUtil.splitToArray(securityProperties.getNotMatch(), ","));
         registry.addInterceptor(roleInterceptor);
+        registry.addInterceptor(blackInterceptor)
+                .addPathPatterns("/**")
+                .excludePathPatterns(CharSequenceUtil.splitToArray(securityProperties.getExcludes(), ","))
+                .excludePathPatterns(CharSequenceUtil.splitToArray(securityProperties.getNotMatch(), ","));
     }
 }

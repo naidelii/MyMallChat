@@ -12,7 +12,7 @@ public class JwtTest {
 
     @Test
     public void createToken() {
-        String userId = "1724724657689309186";
+        String userId = "1";
         String token = JwtUtils.createToken(userId);
         System.out.println(token);
     }

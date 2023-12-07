@@ -2,7 +2,6 @@ package com.naidelii.chat.user.interceptor;
 
 import com.naidelii.base.constant.enums.ResultCodeEnum;
 import com.naidelii.chat.user.dao.SysRoleDao;
-import com.naidelii.chat.user.service.ISysRoleService;
 import com.naidelii.security.annotation.RequiresRole;
 import com.naidelii.security.entity.LoginUser;
 import com.naidelii.security.util.SecurityUtils;
@@ -24,8 +23,6 @@ import java.util.Set;
 @Component
 public class RoleInterceptor implements HandlerInterceptor {
 
-    @Autowired
-    private ISysRoleService roleService;
     @Autowired
     private SysRoleDao roleDao;
 

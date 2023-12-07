@@ -1,6 +1,5 @@
 package com.naidelii.security.util;
 
-import com.naidelii.base.exception.NotLoginException;
 import com.naidelii.security.entity.LoginUser;
 
 import java.util.Map;
@@ -37,9 +36,6 @@ public class SecurityContext {
 
     public static void setLoginUser(String token) {
         LoginUser loginUser = CONTEXT.get(token);
-        if (loginUser == null) {
-            throw new NotLoginException("该用户未登录！");
-        }
         THREAD_LOCAL.set(loginUser);
     }
 
