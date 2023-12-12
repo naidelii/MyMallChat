@@ -4,11 +4,11 @@ mallchat:
     port: 3306
     db: mall_chat
     username: root
-    password: 123456
+    password: Mh.123456
   redis:
     host: 10.8.8.252
     port: 6379
-    password: 123456
+    password: ManHui20!&
 
 # 微信公众号配置
 wx:
