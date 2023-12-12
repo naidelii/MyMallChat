@@ -1,12 +1,12 @@
 mallchat:
   mysql:
-    ip: 192.168.3.32
+    ip: 10.8.8.252
     port: 3306
     db: mall_chat
     username: root
     password: 123456
   redis:
-    host: 192.168.3.32
+    host: 10.8.8.252
     port: 6379
     password: 123456
 

@@ -56,6 +56,27 @@ public class WxMpTest {
         System.out.println(entries);
     }
 
+    @Test
+    public void draft2() throws WxErrorException {
+        String accessToken = wxMpService.getAccessToken();
+        String url = "https://api.weixin.qq.com/cgi-bin/draft/add?access_token=" + accessToken;
+        JSONObject data = new JSONObject();
+        JSONArray array = new JSONArray();
+        JSONObject obj1 = new JSONObject();
+        obj1.set("title", "标题1");
+        obj1.set("content", "正文1");
+        obj1.set("thumb_media_id", "WBuJmGjhUnnz1TjDWqPBUqqEMblwYRzjXIQzcUixq1xO-K9Iowf1RusqS421N_FO");
+        array.add(obj1);
+        JSONObject obj2 = new JSONObject();
+        obj2.set("title", "标题2");
+        obj2.set("content", "正文2");
+        obj2.set("thumb_media_id", "WBuJmGjhUnnz1TjDWqPBUqqEMblwYRzjXIQzcUixq1xO-K9Iowf1RusqS421N_FO");
+        array.add(obj2);
+        data.set("articles", array);
+        String result = HttpUtil.post(url, data.toString());
+        JSONObject entries = JSONUtil.parseObj(result);
+        System.out.println(entries);
+    }
 
     /**
      * 发布文章
@@ -137,4 +158,22 @@ public class WxMpTest {
         JSONObject entries = JSONUtil.parseObj(result);
         System.out.println(entries);
     }
+
+    /**
+     * 获取成功发布列表
+     * @throws WxErrorException e
+     */
+    @Test
+    public void getPublishedSuccessList() throws WxErrorException {
+        String accessToken = wxMpService.getAccessToken();
+        String url = "https://api.weixin.qq.com/cgi-bin/freepublish/batchget?access_token=" + accessToken;
+        JSONObject data = new JSONObject();
+        data.set("no_content", 0);
+        data.set("offset", 0);
+        data.set("count", 20);
+        String result = HttpUtil.post(url, data.toString());
+        JSONObject entries = JSONUtil.parseObj(result);
+        System.out.println(entries);
+    }
+
 }
